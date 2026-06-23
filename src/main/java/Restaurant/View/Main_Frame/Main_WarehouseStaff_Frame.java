@@ -1,7 +1,6 @@
 package Restaurant.View.Main_Frame;
 
 
-import Restaurant.Controller.DatabaseConnection;
 import Restaurant.Controller.Event.EventMenuSelected;
 import Restaurant.Model.ModelNguoiDung;
 import Restaurant.View.Component.WarehouseStaff_Component.MenuStaff;
@@ -13,6 +12,8 @@ import Restaurant.View.Form.Staff_Form.WarehouseStaff.Warehouse_Form;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.SQLException;
+
+import com.restaurant.DatabaseConnection;
 
 import Restaurant.View.Form.MainForm;
 import net.miginfocom.swing.MigLayout;
@@ -145,11 +146,7 @@ public class Main_WarehouseStaff_Frame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        try {
-            DatabaseConnection.getInstance().connectToDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        DatabaseConnection.getInstance();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main_WarehouseStaff_Frame().setVisible(true);
@@ -183,11 +180,7 @@ public class Main_WarehouseStaff_Frame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        try {
-            DatabaseConnection.getInstance().connectToDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        DatabaseConnection.getInstance();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main_WarehouseStaff_Frame(user).setVisible(true);

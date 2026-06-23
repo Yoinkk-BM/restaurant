@@ -1,17 +1,20 @@
 package Restaurant.Controller;
 
-import Restaurant.Model.ModelHoaDon;
-import Restaurant.Model.ModelMonAn;
-import Restaurant.Model.ModelNhanVien;
-import Restaurant.Model.ModelChart;
-import Restaurant.Model.ModelPNK;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
+
+import com.restaurant.DatabaseConnection;
+
+import Restaurant.Model.ModelChart;
+import Restaurant.Model.ModelHoaDon;
+import Restaurant.Model.ModelMonAn;
+import Restaurant.Model.ModelNhanVien;
+import Restaurant.Model.ModelPNK;
 
 public class ServiceAdmin {
 

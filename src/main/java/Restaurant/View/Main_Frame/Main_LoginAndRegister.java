@@ -2,7 +2,6 @@ package Restaurant.View.Main_Frame;
 
 
 
-import Restaurant.Controller.DatabaseConnection;
 import Restaurant.Controller.ServiceMail;
 import Restaurant.Controller.ServiceUser;
 import Restaurant.Model.ModelLogin;
@@ -24,6 +23,8 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+
+import com.restaurant.DatabaseConnection;
 
 
 public class Main_LoginAndRegister extends javax.swing.JFrame {
@@ -338,11 +339,7 @@ public class Main_LoginAndRegister extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        try {
-            DatabaseConnection.getInstance().connectToDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        DatabaseConnection.getInstance();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main_LoginAndRegister().setVisible(true);
@@ -377,11 +374,7 @@ public class Main_LoginAndRegister extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        try {
-            DatabaseConnection.getInstance().connectToDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        DatabaseConnection.getInstance();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main_LoginAndRegister().setVisible(true);

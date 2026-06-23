@@ -1,5 +1,15 @@
 package Restaurant.Controller;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import com.restaurant.DatabaseConnection;
+
 import Restaurant.Model.ModelBan;
 import Restaurant.Model.ModelCTNK;
 import Restaurant.Model.ModelCTXK;
@@ -10,13 +20,6 @@ import Restaurant.Model.ModelNguyenLieu;
 import Restaurant.Model.ModelNhanVien;
 import Restaurant.Model.ModelPNK;
 import Restaurant.Model.ModelPXK;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class ServiceStaff {
 

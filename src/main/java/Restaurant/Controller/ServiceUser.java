@@ -2,16 +2,19 @@
 package Restaurant.Controller;
 
 
-import Restaurant.Model.ModelLogin;
-import Restaurant.Model.ModelNguoiDung;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+
+import com.restaurant.DatabaseConnection;
+
+import Restaurant.Model.ModelLogin;
+import Restaurant.Model.ModelNguoiDung;
 
 // Controller Đăng ký/Đăng nhập vào hệ thống
 public class ServiceUser {

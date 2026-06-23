@@ -2,7 +2,6 @@ package Restaurant.View.Main_Frame;
 
 
 
-import Restaurant.Controller.DatabaseConnection;
 import Restaurant.Controller.Event.EventMenuSelected;
 import Restaurant.Model.ModelNguoiDung;
 import Restaurant.View.Component.Customer_Component.Menu;
@@ -10,6 +9,8 @@ import Restaurant.View.Component.Customer_Component.Menu;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.sql.SQLException;
+
+import com.restaurant.DatabaseConnection;
 
 import Restaurant.View.Form.Customer_Form.AboutUs_Form;
 import Restaurant.View.Form.Customer_Form.AccountC_Form;
@@ -167,11 +168,8 @@ public class Main_Customer_Frame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        try {
-            DatabaseConnection.getInstance().connectToDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            DatabaseConnection.getInstance();
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main_Customer_Frame().setVisible(true);
@@ -203,11 +201,7 @@ public class Main_Customer_Frame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        try {
-            DatabaseConnection.getInstance().connectToDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        DatabaseConnection.getInstance();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Main_Customer_Frame(user).setVisible(true);
