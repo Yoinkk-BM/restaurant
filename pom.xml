@@ -66,15 +66,10 @@
         </dependency>
         
         <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>21.1.0.0</version>
-        </dependency>
-    </dependencies>
-<dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>13.4.0.jre11</version>
         </dependency>
+    </dependencies>
 
 </project>
