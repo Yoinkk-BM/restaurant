@@ -19,7 +19,8 @@ public class DatabaseConnection {
     // ĐƯA LOGIC KẾT NỐI VÀO HÀM KHỞI TẠO NÀY
     private DatabaseConnection() {
         try {
-final String url = "jdbc:sqlserver://localhost;instanceName=SQLEXPRESS;databaseName=QuanLyNhaHang;encrypt=false;trustServerCertificate=true";            final String username = "sa";
+final String url = "jdbc:sqlserver://localhost:1433;databaseName=QuanLyNhaHang;encrypt=false;trustServerCertificate=true";
+            final String username = "sa";
             final String password = "202306";
             
             connection = DriverManager.getConnection(url, username, password);
