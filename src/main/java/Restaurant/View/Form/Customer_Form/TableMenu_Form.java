@@ -73,13 +73,33 @@ public class TableMenu_Form extends javax.swing.JPanel {
     }
     public void initMenuTable(){
         try {
-            
             list = service.MenuTable(floor);
-            for(ModelBan data:list){
-            panel.add(new CardBan(data,customer));
+            
+            // --- BƯỚC 1: BÁO CÁO KẾT QUẢ TÌM KIẾM RA CONSOLE ---
+            System.out.println("=====================================");
+            System.out.println("Đang load dữ liệu cho: " + floor);
+            System.out.println("Số lượng bàn tìm thấy: " + list.size());
+            System.out.println("=====================================");
+            
+            // Xóa sạch các bàn cũ trước khi load bàn mới (tránh bị lỗi đè giao diện)
+            panel.removeAll(); 
+            
+            for(ModelBan data : list){
+                // Thêm từng bàn vào giao diện
+                panel.add(new CardBan(data, customer));
             }
-        }catch(SQLException ex) {
+            
+            // --- BƯỚC 2: ÉP JAVA SWING VẼ LẠI GIAO DIỆN ---
+            panel.repaint();
+            panel.revalidate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Lỗi gọi Database: " + ex.getMessage());
             ex.printStackTrace();
+        } catch (Exception e) {
+            // Đề phòng trường hợp biến 'customer' bị null gây lỗi ngầm
+            System.out.println("Lỗi khởi tạo giao diện CardBan: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     public void searchTable(String txt){

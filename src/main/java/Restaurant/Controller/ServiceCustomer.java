@@ -138,14 +138,15 @@ public class ServiceCustomer {
     }
 
     //Lấy thông tin khách hàng từ ID người dùng
+   // Lấy thông tin khách hàng từ ID người dùng
     public ModelKhachHang getCustomer(int userID) throws SQLException {
         ModelKhachHang data = null;
-        String sql = "SELECT ID_KH, TenKH, to_char(Ngaythamgia, 'dd-mm-yyyy') AS NgayTG, Doanhso,Diemtichluy FROM KhachHang WHERE ID_ND=?";
+        // Đã sửa to_char thành FORMAT cho SQL Server
+        String sql = "SELECT ID_KH, TenKH, FORMAT(Ngaythamgia, 'dd-MM-yyyy') AS NgayTG, Doanhso, Diemtichluy FROM KhachHang WHERE ID_ND=?";
         PreparedStatement p = con.prepareStatement(sql);
         p.setInt(1, userID);
         ResultSet r = p.executeQuery();
         while (r.next()) {
-
             int id = r.getInt("ID_KH");
             String name = r.getString("TenKH");
             String date = r.getString("NgayTG");
@@ -230,34 +231,45 @@ public class ServiceCustomer {
         Trạng thái Hóa đơn mặc định là Chưa thanh toán
      */
     public void InsertHoaDon(ModelBan table, ModelKhachHang customer) throws SQLException {
-        //Tìm ID_HD tiếp theo
-        int idHD=0;
-        PreparedStatement p_ID=con.prepareStatement("SELECT MAX(ID_HoaDon) +1 FROM HoaDon");
-        ResultSet r_id=p_ID.executeQuery();
+        // 1. Tìm ID_HD tiếp theo
+        int idHD = 0;
+        PreparedStatement p_ID = con.prepareStatement("SELECT MAX(ID_HoaDon) +1 FROM HoaDon");
+        ResultSet r_id = p_ID.executeQuery();
         if(r_id.next()){
-            idHD=r_id.getInt(1);
+            idHD = r_id.getInt(1);
         }
        
-        //Thêm Hoá Đơn mới
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-YYYY");
-        String sql = "INSERT INTO HoaDon(ID_HoaDon,ID_KH,ID_Ban,NgayHD,TienMonAn,TienGiam,Trangthai)"
-                + " VALUES (?,?,?,to_date(?, 'dd-mm-yyyy'),0,0,'Chua thanh toan')";
+        // 2. Thêm Hoá Đơn mới (Đã sửa CONVERT cho SQL Server ở bước trước)
+        String sql = "INSERT INTO HoaDon(ID_HoaDon, ID_KH, ID_Ban, NgayHD, TienMonAn, TienGiam, Trangthai)"
+                + " VALUES (?, ?, ?, CONVERT(DATE, ?, 105), 0, 0, 'Chua thanh toan')";
         PreparedStatement p = con.prepareStatement(sql);
         p.setInt(1, idHD);
         p.setInt(2, customer.getID_KH());
         p.setInt(3, table.getID());
+        
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         p.setString(4, simpleDateFormat.format(new Date()));
+        
+        p.execute();
+        
+        // Đóng cẩn thận
         p_ID.close();
         r_id.close();
-        p.execute();
         p.close();
 
+        
+        String sqlUpdateBan = "UPDATE Ban SET Trangthai = 'Dang dung bua' WHERE ID_Ban = ?";
+        PreparedStatement pUpdate = con.prepareStatement(sqlUpdateBan);
+        pUpdate.setInt(1, table.getID());
+        pUpdate.execute();
+        pUpdate.close();
+        // ==========================================================
     }
-
-    //Lấy thông tin HoaDon mà Khách hàng vừa đặt, Hóa Đơn có trạng thái 'Chưa thanh toán'
+    // Lấy thông tin HoaDon mà Khách hàng vừa đặt, Hóa Đơn có trạng thái 'Chưa thanh toán'
     public ModelHoaDon FindHoaDon(ModelKhachHang customer) throws SQLException {
         ModelHoaDon hoadon = null;
-        String sql = "SELECT ID_HoaDon,ID_KH,ID_Ban,to_char(NgayHD,'dd-mm-yyyy') AS Ngay,TienMonAn,Code_Voucher,TienGiam,Tongtien,Trangthai FROM HoaDon "
+        // Đã sửa to_char thành FORMAT cho SQL Server
+        String sql = "SELECT ID_HoaDon, ID_KH, ID_Ban, FORMAT(NgayHD, 'dd-MM-yyyy') AS Ngay, TienMonAn, Code_Voucher, TienGiam, Tongtien, Trangthai FROM HoaDon "
                 + "WHERE ID_KH=? AND Trangthai='Chua thanh toan'";
         PreparedStatement p = con.prepareStatement(sql);
         p.setInt(1, customer.getID_KH());
@@ -278,7 +290,6 @@ public class ServiceCustomer {
         p.close();
         return hoadon;
     }
-
     //Thêm món ăn mới khách hàng vừa đặt vào CTHD
     public void InsertCTHD(int ID_HoaDon, int ID_MonAn, int soluong) throws SQLException {
         //Kiểm tra món ăn đã có trong CTHD hay chưa, nếu đã có cập nhật số lượng, nếu chưa thì thêm CTHD mới

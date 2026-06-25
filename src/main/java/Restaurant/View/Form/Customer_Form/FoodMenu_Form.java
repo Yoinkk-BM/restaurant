@@ -316,15 +316,22 @@ public class FoodMenu_Form extends javax.swing.JPanel {
         initMenuFoodOrderby((String) orderby.getSelectedItem());
     }//GEN-LAST:event_orderbyActionPerformed
 
-    private void cmdShowBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdShowBillActionPerformed
+    private void cmdShowBillActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            HoaDon=service.FindHoaDon(customer);
+            // Cập nhật lại dữ liệu Hóa đơn mới nhất từ DB
+            HoaDon = service.FindHoaDon(customer);
+            
+            // --- THÊM DÒNG NÀY ---
+            // Khởi tạo một hộp thoại hoàn toàn mới để xóa bỏ trạng thái cũ bị kẹt
+            obj = new MS_PayBill(Main_Customer_Frame.getFrames()[0], true);
+            
+            // Mở hóa đơn lên
             obj.showBill(HoaDon);
+            
         } catch (SQLException ex) {
             Logger.getLogger(FoodMenu_Form.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_cmdShowBillActionPerformed
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private Restaurant.View.Swing.Button cmdShowBill;

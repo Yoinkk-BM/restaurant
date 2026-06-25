@@ -88,7 +88,7 @@ public class Kitchen_Form extends JPanel {
         panel.setBackground(new Color(30, 30, 30));
         panel.setBorder(BorderFactory.createEmptyBorder(14, 20, 14, 20));
 
-        JLabel title = new JLabel("🍳  MÀN HÌNH BẾP  —  DANH SÁCH MÓN CẦN CHẾ BIẾN");
+        JLabel title = new JLabel(" MÀN HÌNH BẾP  —  DANH SÁCH MÓN CẦN CHẾ BIẾN");
         title.setFont(new Font("Segoe UI", Font.BOLD, 18));
         title.setForeground(Color.WHITE);
 
@@ -113,11 +113,26 @@ public class Kitchen_Form extends JPanel {
         table.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         table.setRowHeight(36);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
-        table.getTableHeader().setBackground(new Color(50, 50, 50));
-        table.getTableHeader().setForeground(Color.WHITE);
-        table.setGridColor(new Color(220, 220, 220));
+
+        // ==========================================
+        // 1. KẺ VẠCH CHO NỘI DUNG BẢNG
+        // ==========================================
+        table.setGridColor(new Color(180, 180, 180)); 
         table.setShowGrid(true);
+        table.setShowVerticalLines(true);
+        table.setShowHorizontalLines(true);
+        table.setIntercellSpacing(new java.awt.Dimension(1, 1));
+
+        // ==========================================
+        // 2. ÉP MÀU VÀ KẺ VẠCH CHO TIÊU ĐỀ
+        // ==========================================
+        javax.swing.table.DefaultTableCellRenderer headerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        headerRenderer.setBackground(new Color(50, 50, 50)); 
+        headerRenderer.setForeground(Color.WHITE);           
+        headerRenderer.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        headerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        headerRenderer.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(100, 100, 100)));
+        table.getTableHeader().setDefaultRenderer(headerRenderer);
 
         // Căn giữa các cột số
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -135,6 +150,19 @@ public class Kitchen_Form extends JPanel {
             table.getColumnModel().getColumn(i).setPreferredWidth(widths[i]);
         }
 
+        // ==========================================
+        // 3. ẨN CỘT ID VÀ HÓA ĐƠN
+        // ==========================================
+        table.getColumnModel().getColumn(0).setMinWidth(0);
+        table.getColumnModel().getColumn(0).setMaxWidth(0);
+        table.getColumnModel().getColumn(0).setWidth(0);
+        table.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        table.getColumnModel().getColumn(1).setMinWidth(0);
+        table.getColumnModel().getColumn(1).setMaxWidth(0);
+        table.getColumnModel().getColumn(1).setWidth(0);
+        table.getColumnModel().getColumn(1).setPreferredWidth(0);
+
         JScrollPane sp = new JScrollPane(table);
         sp.setBorder(BorderFactory.createEmptyBorder(10, 14, 0, 14));
         return sp;
@@ -146,12 +174,12 @@ public class Kitchen_Form extends JPanel {
         panel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(210, 210, 210)));
 
         // Nút Bắt đầu làm
-        btnStart = new JButton("▶  Bắt đầu làm");
+        btnStart = new JButton(" Bắt đầu làm");
         styleButton(btnStart, new Color(52, 152, 219), Color.WHITE);
         btnStart.addActionListener(e -> onStartCooking());
 
         // Nút Hoàn thành
-        btnDone = new JButton("✔  Hoàn thành");
+        btnDone = new JButton(" Hoàn thành");
         styleButton(btnDone, new Color(39, 174, 96), Color.WHITE);
         btnDone.addActionListener(e -> onMarkDone());
 
@@ -277,26 +305,29 @@ public class Kitchen_Form extends JPanel {
 
         ModelKitchenOrder order = currentOrders.get(selectedRow);
 
-        // Chỉ chuyển từ 'Dang lam' → 'Hoan thanh'
-        if (!"Dang lam".equals(order.getTrangThai())) {
+        // Cho phép chuyển từ 'Dang cho' hoặc 'Dang lam' → 'Hoan thanh'
+        String trangThaiHienTai = order.getTrangThai();
+        if (!"Dang lam".equals(trangThaiHienTai) && !"Dang cho".equals(trangThaiHienTai)) {
             JOptionPane.showMessageDialog(this,
-                "Chỉ có thể hoàn thành món đang được làm.",
+                "Chỉ có thể hoàn thành món đang chờ hoặc đang được làm.",
                 "Không thể thực hiện", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
         try {
+            // Gọi hàm update trong Service
             boolean ok = service.updateStatus(order.getId(), "Hoan thanh");
             if (ok) {
-                loadData(); // Refresh ngay lập tức
+                loadData(); // Refresh ngay lập tức màn hình bếp
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy món để cập nhật trong Database!");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
                 "Lỗi cập nhật trạng thái: " + e.getMessage(),
                 "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
-
     // =========================================================================
     // AUTO-REFRESH TIMER
     // =========================================================================
