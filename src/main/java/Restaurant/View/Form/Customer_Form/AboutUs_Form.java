@@ -5,8 +5,6 @@
 
 package  Restaurant.View.Form.Customer_Form;
 
-import Restaurant.View.Swing.PanelRound;
-
 /**
  *
  * @author Admin
@@ -80,7 +78,7 @@ public class AboutUs_Form extends javax.swing.JPanel {
         footer.setBackground(new java.awt.Color(255, 255, 255));
         footer.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         footer.setForeground(new java.awt.Color(63, 63, 63));
-        footer.setText("Since : 2023 - Co-founder by The Dreamers Team\n");
+        
 
         jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane3.setBorder(null);
@@ -92,7 +90,6 @@ public class AboutUs_Form extends javax.swing.JPanel {
         listMember.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         listMember.setForeground(new java.awt.Color(89, 89, 89));
         listMember.setRows(5);
-        listMember.setText("Team Members :\nLê Thị Ánh Hồng - Product Owner\nNguyễn Hoàng Việt - Scrum Master\nNguyễn Hoàng Phúc - Developer\nHồ Quang Đỉnh -  Developer");
         listMember.setBorder(null);
         listMember.setFocusable(false);
         jScrollPane3.setViewportView(listMember);
