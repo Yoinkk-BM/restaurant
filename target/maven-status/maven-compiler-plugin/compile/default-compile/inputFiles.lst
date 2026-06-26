@@ -4,6 +4,7 @@ C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Controller
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Controller\PosController.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Controller\ServiceAdmin.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Controller\ServiceCustomer.java
+C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Controller\ServiceKitchen.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Controller\ServiceMail.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Controller\ServiceStaff.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Controller\ServiceUser.java
@@ -16,6 +17,7 @@ C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Model\Mode
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Model\ModelHoaDon.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Model\ModelKhachHang.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Model\ModelKho.java
+C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Model\ModelKitchenOrder.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Model\ModelLegend.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Model\ModelLogin.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\Model\ModelMenu.java
@@ -73,6 +75,7 @@ C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\Staff_Form\Admin\RevenueReport_Form.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\Staff_Form\Admin\StaffManagement_Form.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\Staff_Form\CusInformation_Form.java
+C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\Staff_Form\Kitchen\Kitchen_Form.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\Staff_Form\Staff\BillS_Form.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\Staff_Form\Staff\OrderFood_Form.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\Staff_Form\Staff\TableMenuS_Form.java
@@ -87,6 +90,7 @@ C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Form\Staff_Form\WarehouseStaff\Warehouse_Form.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Main_Frame\Main_Admin_Frame.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Main_Frame\Main_Customer_Frame.java
+C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Main_Frame\Main_Kitchen_Frame.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Main_Frame\Main_LoginAndRegister.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Main_Frame\Main_Staff_Frame.java
 C:\Users\Admin\Documents\deadline\restaurant\src\main\java\Restaurant\View\Main_Frame\Main_WarehouseStaff_Frame.java
