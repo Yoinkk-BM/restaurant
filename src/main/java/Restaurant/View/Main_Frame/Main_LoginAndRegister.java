@@ -18,13 +18,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+
 import javax.swing.JLayeredPane;
+
 import net.miginfocom.swing.MigLayout;
+
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import com.restaurant.DatabaseConnection;
+
+import Restaurant.View.Form.CashierPosPanel;
 
 
 public class Main_LoginAndRegister extends javax.swing.JFrame {
@@ -192,6 +197,9 @@ public class Main_LoginAndRegister extends javax.swing.JFrame {
                     }
                     case "Quan Ly" -> {
                         Main_Admin_Frame.main(user);
+                    }
+                    case "Thu Ngan" -> {
+                        Main_Cashier_Frame.main(user);
                     }
                     default -> {
                     }
