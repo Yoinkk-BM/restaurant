@@ -12,6 +12,7 @@ import com.restaurant.DatabaseConnection;
 
 public class PosController {
 
+   
     public List<Object[]> layDanhSachMonAn() {
         List<Object[]> list = new ArrayList<>();
         String sql = "SELECT ID_MonAn, TenMon, DonGia FROM MonAn WHERE TrangThai = 'Dang kinh doanh'";
@@ -80,5 +81,67 @@ public class PosController {
             e.printStackTrace();
             return false;
         }
+    }
+
+    // =========================================================================
+    // PHẦN 2: CODE MỚI DÀNH RIÊNG CHO LUỒNG THU NGÂN (Lấy theo Bàn/Tầng)
+    // =========================================================================
+
+    // Hàm lấy danh sách các Hóa đơn chưa thanh toán (Đổ vào Bảng bên trái)
+    public List<Object[]> layDanhSachHoaDonChuaThanhToan() {
+        List<Object[]> list = new ArrayList<>();
+        String sql = "SELECT h.ID_HoaDon, b.Vitri, b.TenBan, h.Tongtien " +
+                     "FROM HoaDon h JOIN Ban b ON h.ID_Ban = b.ID_Ban " +
+                     "WHERE h.Trangthai = N'Chua thanh toan'";
+        try {
+            Connection con = DatabaseConnection.getInstance().getConnection();
+            if (con == null) return list;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Object[]{
+                    rs.getInt("ID_HoaDon"), 
+                    rs.getString("Vitri"), 
+                    rs.getString("TenBan"), 
+                    rs.getDouble("Tongtien")
+                });
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
+
+    // Hàm lấy chi tiết các món ăn của 1 Hóa đơn cụ thể (Đổ vào Bảng bên phải)
+    public List<Object[]> layChiTietHoaDon(int idHoaDon) {
+        List<Object[]> list = new ArrayList<>();
+        String sql = "SELECT m.TenMon, c.SoLuong, m.DonGia, c.Thanhtien " +
+                     "FROM CTHD c JOIN MonAn m ON c.ID_MonAn = m.ID_MonAn " +
+                     "WHERE c.ID_HoaDon = ?";
+        try {
+            Connection con = DatabaseConnection.getInstance().getConnection();
+            if (con == null) return list;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idHoaDon); 
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Object[]{
+                    rs.getString("TenMon"), 
+                    rs.getInt("SoLuong"), 
+                    rs.getDouble("DonGia"), 
+                    rs.getDouble("Thanhtien")
+                });
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
+    // Hàm cập nhật trạng thái hóa đơn thành Đã thanh toán
+    public boolean thanhToanHoaDon(int idHoaDon) {
+        String sql = "UPDATE HoaDon SET Trangthai = N'Da thanh toan' WHERE ID_HoaDon = ?";
+        try {
+            Connection con = DatabaseConnection.getInstance().getConnection();
+            if (con == null) return false;
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idHoaDon);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) { e.printStackTrace(); return false; }
     }
 }
