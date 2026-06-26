@@ -350,6 +350,8 @@ public class Main_LoginAndRegister extends javax.swing.JFrame {
     }
     public static void main(String args[]) {
         
+        java.util.Locale.setDefault(java.util.Locale.US);
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
