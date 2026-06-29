@@ -34,22 +34,22 @@ import Restaurant.Model.ModelKitchenOrder;
  */
 public class Kitchen_Form extends JPanel {
 
-    // ─── Service & dữ liệu ──────────────────────────────────────────────────
+    //  Service & dữ liệu 
     private final ServiceKitchen service = new ServiceKitchen();
     private List<ModelKitchenOrder> currentOrders; // Cache dòng hiện tại
 
-    // ─── Timer auto-refresh ──────────────────────────────────────────────────
+    //  Timer auto-refresh 
     private javax.swing.Timer refreshTimer;
     private static final int REFRESH_INTERVAL_MS = 3000; // 3 giây
 
-    // ─── Tiêu đề cột bảng ────────────────────────────────────────────────────
+    //  Tiêu đề cột bảng ──
     private static final String[] COLUMNS = {
         "#", "Hóa Đơn", "Tên Món", "SL", "Bàn", "Trạng Thái", "Thời Gian Đặt"
     };
     // Index cột ẩn (ID_KO) — lưu trong model nhưng ẩn khỏi UI
     // Ta dùng currentOrders.get(row) để lấy ID thay vì cột ẩn
 
-    // ─── UI Components ────────────────────────────────────────────────────────
+    //  UI Components 
     private JTable table;
     private DefaultTableModel tableModel;
     private JButton btnStart;
@@ -63,22 +63,22 @@ public class Kitchen_Form extends JPanel {
         loadData(); // Load lần đầu ngay lập tức
     }
 
-    // =========================================================================
+    
     // KHỞI TẠO GIAO DIỆN
-    // =========================================================================
+    
     private void initUI() {
         setLayout(new BorderLayout(0, 0));
         setBackground(new Color(245, 245, 245));
 
-        // ── Header ────────────────────────────────────────────────────────────
+        // ── Header ──
         JPanel header = createHeader();
         add(header, BorderLayout.NORTH);
 
-        // ── Bảng món ──────────────────────────────────────────────────────────
+        // ── Bảng món 
         JScrollPane scrollPane = createTable();
         add(scrollPane, BorderLayout.CENTER);
 
-        // ── Footer (nút bấm + trạng thái) ────────────────────────────────────
+        // ── Footer (nút bấm + trạng thái) 
         JPanel footer = createFooter();
         add(footer, BorderLayout.SOUTH);
     }
@@ -114,18 +114,18 @@ public class Kitchen_Form extends JPanel {
         table.setRowHeight(36);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // ==========================================
+       
         // 1. KẺ VẠCH CHO NỘI DUNG BẢNG
-        // ==========================================
+        
         table.setGridColor(new Color(180, 180, 180)); 
         table.setShowGrid(true);
         table.setShowVerticalLines(true);
         table.setShowHorizontalLines(true);
         table.setIntercellSpacing(new java.awt.Dimension(1, 1));
 
-        // ==========================================
+        
         // 2. ÉP MÀU VÀ KẺ VẠCH CHO TIÊU ĐỀ
-        // ==========================================
+        
         javax.swing.table.DefaultTableCellRenderer headerRenderer = new javax.swing.table.DefaultTableCellRenderer();
         headerRenderer.setBackground(new Color(50, 50, 50)); 
         headerRenderer.setForeground(Color.WHITE);           
@@ -150,9 +150,9 @@ public class Kitchen_Form extends JPanel {
             table.getColumnModel().getColumn(i).setPreferredWidth(widths[i]);
         }
 
-        // ==========================================
+        
         // 3. ẨN CỘT ID VÀ HÓA ĐƠN
-        // ==========================================
+        
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setWidth(0);
@@ -205,9 +205,13 @@ public class Kitchen_Form extends JPanel {
         btn.setPreferredSize(new Dimension(170, 40));
     }
 
-    // =========================================================================
+    
     // LOAD DỮ LIỆU TỪ DB
-    // =========================================================================
+    /**
+     * Tải danh sách các món ăn đang ở trạng thái "Đang chờ" hoặc "Đang làm" từ Database.
+     * Cập nhật dữ liệu vào biến currentOrders, sau đó gọi populateTable() để vẽ lên giao diện.
+     * Cập nhật luôn số lượng món và thời gian refresh cuối cùng lên các Label.
+     */
     public void loadData() {
         try {
             currentOrders = service.getPendingOrders();
@@ -230,6 +234,11 @@ public class Kitchen_Form extends JPanel {
         }
     }
 
+    /**
+     * Map dữ liệu từ danh sách ModelKitchenOrder vào DefaultTableModel của JTable.
+     * Định dạng lại cách hiển thị thời gian và việt hóa trạng thái (Đang chờ, Đang làm, Hoàn thành) 
+     * kèm theo các icon biểu tượng để đầu bếp dễ nhìn.
+     */
     private void populateTable(List<ModelKitchenOrder> orders) {
         tableModel.setRowCount(0); // Xóa dữ liệu cũ
 
@@ -259,9 +268,13 @@ public class Kitchen_Form extends JPanel {
         }
     }
 
-    // =========================================================================
+    
     // XỬ LÝ NÚT BẤM
-    // =========================================================================
+    /**
+     * Xử lý sự kiện khi đầu bếp bấm nút "Bắt đầu làm".
+     * Kiểm tra xem dòng được chọn có đang ở trạng thái "Đang chờ" hay không.
+     * Nếu hợp lệ, gọi Service cập nhật trạng thái thành "Dang lam" dưới Database và tải lại bảng.
+     */
     private void onStartCooking() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow < 0) {
@@ -294,6 +307,11 @@ public class Kitchen_Form extends JPanel {
         }
     }
 
+    /**
+     * Xử lý sự kiện khi đầu bếp bấm nút "Hoàn thành".
+     * Kiểm tra dòng được chọn, gọi Service cập nhật trạng thái món ăn thành "Hoan thanh" dưới DB.
+     * Sau khi hoàn thành, món ăn này sẽ biến mất khỏi màn hình bếp ở lần refresh tiếp theo.
+     */
     private void onMarkDone() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow < 0) {
@@ -328,9 +346,13 @@ public class Kitchen_Form extends JPanel {
                 "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
-    // =========================================================================
+    
     // AUTO-REFRESH TIMER
-    // =========================================================================
+    /**
+     * Khởi tạo và chạy một Swing Timer.
+     * Cứ sau mỗi khoảng thời gian REFRESH_INTERVAL_MS (ví dụ 3 giây), 
+     * Timer sẽ tự động gọi lại hàm loadData() để cập nhật danh sách món mới nhất từ hệ thống.
+     */
     private void startAutoRefresh() {
         refreshTimer = new javax.swing.Timer(REFRESH_INTERVAL_MS, e -> loadData());
         refreshTimer.setRepeats(true);
@@ -344,9 +366,9 @@ public class Kitchen_Form extends JPanel {
         }
     }
 
-    // =========================================================================
+    
     // RENDERER TÔ MÀU DÒNG THEO TRẠNG THÁI
-    // =========================================================================
+    
     private static class StatusColorRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,

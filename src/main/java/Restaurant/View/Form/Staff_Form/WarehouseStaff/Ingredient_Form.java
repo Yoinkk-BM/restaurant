@@ -33,6 +33,11 @@ public class Ingredient_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo giao diện Quản lý Nguyên Liệu.
+     * Load bảng dữ liệu, lấy tổng số nguyên liệu và định nghĩa sự kiện 
+     * chuyển màn hình/xóa cho các nút Thêm, Sửa, Xóa.
+     */
     public void init(){
         obj = new MS_Confirm(Main_WarehouseStaff_Frame.getFrames()[0], true);
         txtSearch.setHint("Tìm kiếm Nguyên Liệu . . .");
@@ -82,9 +87,17 @@ public class Ingredient_Form extends javax.swing.JPanel {
         });
         
     }
+
+    /**
+     * Lấy tổng số lượng danh mục nguyên liệu hiện có trong List để hiển thị lên Label.
+     */
     public void getUserSales(){
              txtTong.setText(list.size()+"");
     }
+
+    /**
+     * Đổ danh sách Nguyên liệu (Mã, Tên, Đơn giá, Đơn vị tính) từ Database lên bảng JTable.
+     */
     public void initTable(){
         try {
             list = service.MenuNL();
@@ -95,6 +108,10 @@ public class Ingredient_Form extends javax.swing.JPanel {
             ex.printStackTrace();
         }
     }
+
+    /**
+     * Tìm kiếm và lọc danh sách nguyên liệu đang hiển thị dựa theo tên nguyên liệu.
+     */
     public void searchTable(String txt){
         tableNL.removeAllRow();
         for(ModelNguyenLieu data:list){

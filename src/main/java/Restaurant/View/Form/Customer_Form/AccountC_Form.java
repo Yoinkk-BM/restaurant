@@ -41,6 +41,11 @@ public class AccountC_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo màn hình Tài khoản Khách hàng.
+     * Tải thông tin tài khoản, thông tin khách hàng và cấu hình sự kiện click chuột
+     * để ẩn/hiện mật khẩu (toggle password visibility) trên ô textfield mật khẩu.
+     */
     public void init() {
         service = new ServiceCustomer();
         changepass = new MS_ChangePassword(Main_Customer_Frame.getFrames()[0], true);
@@ -65,6 +70,9 @@ public class AccountC_Form extends javax.swing.JPanel {
         });
     }
 
+    /**
+     * Hiển thị thông tin đăng nhập hệ thống của người dùng (Email, Password, Vai trò).
+     */
     public void initUser_information() {
         txtemail.setText(user.getEmail());
         txtmatkhau.setText(user.getPassword());
@@ -72,6 +80,10 @@ public class AccountC_Form extends javax.swing.JPanel {
         txtmatkhau.setSuffixIcon(hide);
     }
 
+    /**
+     * Truy vấn và hiển thị thông tin chi tiết của Khách hàng từ Database 
+     * (Mã KH, Tên, Ngày tham gia, Tổng doanh số đã mua, Điểm tích lũy).
+     */
     public void initCustomer_information() {
         try {
             customer = service.getCustomer(user.getUserID());
@@ -85,6 +97,10 @@ public class AccountC_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Gọi hộp thoại xác nhận khi khách hàng có thao tác chỉnh sửa tên.
+     * Cập nhật thông tin mới vào CSDL nếu khách hàng chọn Đồng ý.
+     */
     private void confirmRename(String message) {
         MS_ConfirmRename obj = new MS_ConfirmRename(Main_Customer_Frame.getFrames()[0], true);
         obj.ConfirmReName(message, customer);
@@ -367,6 +383,9 @@ public class AccountC_Form extends javax.swing.JPanel {
         confirmRename(txttenKH.getText().trim());
     }//GEN-LAST:event_txttenKHActionPerformed
 
+    /**
+     * Xử lý sự kiện Đổi mật khẩu. Bật form MS_ChangePassword và cập nhật lại ô text nếu thành công.
+     */
     private void cmdDMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdDMKActionPerformed
         changepass.ChangePassword(user);
         txtmatkhau.setText(user.getPassword());

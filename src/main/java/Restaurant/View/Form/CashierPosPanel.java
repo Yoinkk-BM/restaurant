@@ -49,13 +49,16 @@ public class CashierPosPanel extends JPanel {
     private double totalAmount = 0;
     private DecimalFormat df = new DecimalFormat("###,###đ");
 
+    /**
+     * Khởi tạo giao diện hệ thống Thu Ngân (POS).
+     * Thiết lập bố cục chia đôi màn hình: Trái (Danh sách hóa đơn chưa thanh toán) và Phải (Chi tiết hóa đơn).
+     * Cài đặt giao diện bảng, nút bấm và gắn sự kiện click chuột để xem chi tiết hóa đơn.
+     */
     public CashierPosPanel() {
         setLayout(new BorderLayout());
         setBackground(new Color(245, 247, 250)); // Nền xám xanh cực nhạt
 
-        // ==========================================
         // 1. HEADER: NÂNG CẤP GIAO DIỆN ĐỎ SANG TRỌNG
-        // ==========================================
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(new Color(198, 40, 40)); 
         headerPanel.setBorder(new EmptyBorder(20, 30, 20, 30));
@@ -72,9 +75,7 @@ public class CashierPosPanel extends JPanel {
         
         add(headerPanel, BorderLayout.NORTH);
 
-        // ==========================================
         // 2. BÊN TRÁI: DANH SÁCH HÓA ĐƠN ĐANG CHỜ
-        // ==========================================
         JPanel leftPanel = new JPanel(new BorderLayout());
         leftPanel.setBackground(new Color(245, 247, 250));
         leftPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -103,11 +104,9 @@ public class CashierPosPanel extends JPanel {
         
         add(leftPanel, BorderLayout.CENTER);
 
-        // ==========================================
         // 3. BÊN PHẢI: CHI TIẾT HÓA ĐƠN & THANH TOÁN
-        // ==========================================
         JPanel rightPanel = new JPanel(new BorderLayout());
-        rightPanel.setPreferredSize(new Dimension(550, 0)); // Rộng hơn một chút để chứa bảng chi tiết
+        rightPanel.setPreferredSize(new Dimension(550, 0)); 
         rightPanel.setBackground(Color.WHITE);
         rightPanel.setBorder(BorderFactory.createMatteBorder(0, 3, 0, 0, new Color(220, 220, 220)));
 
@@ -196,9 +195,7 @@ public class CashierPosPanel extends JPanel {
         rightPanel.add(checkoutPanel, BorderLayout.SOUTH);
         add(rightPanel, BorderLayout.EAST);
 
-        // ==========================================
         // 4. BẮT SỰ KIỆN CLICK VÀO BẢNG DANH SÁCH BÀN
-        // ==========================================
         invoiceTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -219,11 +216,15 @@ public class CashierPosPanel extends JPanel {
         loadDanhSachHoaDon();
     }
 
-    // ==========================================
+    
     // CÁC HÀM XỬ LÝ DỮ LIỆU & GIAO DIỆN
-    // ==========================================
+    
     
     // Hàm nạp danh sách Hóa đơn chưa thanh toán (Bên trái)
+    /**
+     * Tải danh sách các Hóa đơn (Bàn) đang ở trạng thái "Chưa thanh toán".
+     * Gọi qua PosController để lấy dữ liệu từ CSDL và đổ vào bảng bên trái (invoiceTable).
+     */
     private void loadDanhSachHoaDon() {
         invoiceTableModel.setRowCount(0);
         List<Object[]> invoices = posController.layDanhSachHoaDonChuaThanhToan();
@@ -237,6 +238,12 @@ public class CashierPosPanel extends JPanel {
     }
 
     // Hàm nạp chi tiết các món của 1 hóa đơn (Bên phải)
+    /**
+     * Tải chi tiết các món ăn của một Hóa đơn cụ thể.
+     * Xóa dữ liệu cũ trên bảng chi tiết, gọi PosController lấy danh sách món theo ID Hóa đơn,
+     * đổ vào bảng bên phải (detailTable) và cộng dồn để tính Tổng tiền.
+     * * @param idHoaDon Mã hóa đơn cần xem chi tiết
+     */
     private void loadChiTietHoaDon(int idHoaDon) {
         detailTableModel.setRowCount(0);
         totalAmount = 0;
@@ -254,6 +261,10 @@ public class CashierPosPanel extends JPanel {
     }
 
     // Xóa trắng bảng chi tiết sau khi thanh toán xong
+    /**
+     * Làm mới (Xóa trắng) khu vực hiển thị chi tiết hóa đơn ở bên phải.
+     * Được gọi sau khi thanh toán thành công hoặc khi người dùng bấm nút "Làm mới".
+     */
     private void clearDetailPanel() {
         selectedInvoiceId = -1;
         lblSelectedTable.setText("CHI TIẾT: Vui lòng chọn bàn bên trái...");
@@ -263,6 +274,11 @@ public class CashierPosPanel extends JPanel {
     }
 
    // Hàm thiết lập giao diện chuẩn cho các bảng JTable
+   /**
+     * Cấu hình giao diện chuẩn cho các bảng JTable (Định dạng chữ, màu sắc, chiều cao dòng).
+     * Đồng thời khóa chức năng kéo giãn hoặc đổi vị trí các cột để giữ form cố định.
+     * * @param table Đối tượng JTable cần định dạng
+     */
     private void setupTableUI(JTable table) {
         table.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         table.setRowHeight(40);
@@ -279,6 +295,10 @@ public class CashierPosPanel extends JPanel {
     }
 
     // Nút bấm phẳng mượt mà
+    /**
+     * Hàm tiện ích (Utility method) để tạo một nút bấm (JButton) mang phong cách thiết kế phẳng (Flat Design).
+     * Tùy chỉnh màu sắc nền, màu chữ, bo góc và hiệu ứng đổi màu khi hover chuột.
+     */
     private JButton createFlatButton(String text, Color bgColor, Color fgColor) {
         JButton btn = new JButton(text) {
             @Override protected void paintComponent(Graphics g) {

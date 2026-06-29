@@ -26,7 +26,12 @@ public class CusInformation_Form extends javax.swing.JPanel {
         initComponents();
         init();
     }
-
+    
+    /**
+     * Khởi tạo giao diện Quản lý Thông tin Khách hàng.
+     * Cài đặt thanh cuộn, tải dữ liệu khách hàng từ DB, tính tổng số lượng thành viên
+     * và hiển thị ngày tháng hiện tại.
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm Khách Hàng . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -38,15 +43,26 @@ public class CusInformation_Form extends javax.swing.JPanel {
         setCurrentDate();
     }
 
+    /**
+     * Lấy tổng số lượng khách hàng (dựa trên kích thước của list) 
+     * và hiển thị ra nhãn "Members" trên giao diện.
+     */
     public void getSLKH() {
         txtTong.setText(list.size() + " Members");
     }
 
+    /**
+     * Lấy ngày giờ hệ thống hiện tại, định dạng theo chuẩn dd-MM-YYYY và cập nhật lên Label.
+     */
     public void setCurrentDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-YYYY");
         lbDate.setText("Ngày hiện tại: " + simpleDateFormat.format(new Date()));
     }
 
+    /**
+     * Tải danh sách toàn bộ Khách Hàng từ cơ sở dữ liệu thông qua tầng Service.
+     * Đổ các thông tin (Mã KH, Tên, Ngày tham gia, Doanh số, Điểm) vào JTable.
+     */
     public void initTable() {
         try {
             list = service.MenuKH();
@@ -58,6 +74,10 @@ public class CusInformation_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Lọc và tìm kiếm danh sách khách hàng cục bộ trực tiếp trên JTable.
+     * So khớp chuỗi ký tự người dùng nhập với trường Tên Khách Hàng trong list.
+     */
     public void searchTable(String txt) {
         tableKH.removeAllRow();
         for (ModelKhachHang data : list) {

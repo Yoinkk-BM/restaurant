@@ -92,12 +92,15 @@ public class PosController {
         }
     }
 
-    // =========================================================================
-    // PHẦN 2: CODE MỚI DÀNH RIÊNG CHO LUỒNG THU NGÂN (Lấy theo Bàn/Tầng)
-    // =========================================================================
+    
+    // PHẦN 2: CODE DÀNH RIÊNG CHO LUỒNG THU NGÂN (Lấy theo Bàn/Tầng)
+    
 
+
+    // Hàm lấy danh sách các Hóa đơn chưa thanh toán 
     // Lấy danh sách các hóa đơn chưa thanh toán để hiển thị ở khu vực trái của màn hình thu ngân.
     // Mỗi dòng thường bao gồm mã hóa đơn, vị trí bàn, tên bàn và tổng tiền hiện tại.
+//>>>>>>> 02ab92011e2bea6b3d069d065b979ebf3fb4cb45
     public List<Object[]> layDanhSachHoaDonChuaThanhToan() {
         List<Object[]> list = new ArrayList<>();
         String sql = "SELECT h.ID_HoaDon, b.Vitri, b.TenBan, h.Tongtien " +

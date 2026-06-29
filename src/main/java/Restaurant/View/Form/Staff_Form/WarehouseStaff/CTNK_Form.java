@@ -30,6 +30,10 @@ public class CTNK_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo giao diện Chi tiết Phiếu Nhập Kho.
+     * Render thông tin tổng quan của phiếu nhập (Mã số, Ngày lập) lên các Label tương ứng.
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm NL . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -44,6 +48,10 @@ public class CTNK_Form extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Dựa vào Mã Phiếu Nhập, gọi Service lấy danh sách nguyên liệu, số lượng và tính thành tiền 
+     * để đổ dữ liệu vào JTable chi tiết.
+     */
     public void initTable() {
         try {
             list = service.getCTNK(pnk.getIdNK());
@@ -56,6 +64,9 @@ public class CTNK_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Tìm kiếm theo Tên nguyên liệu cục bộ trên danh sách chi tiết của phiếu nhập kho.
+     */
     public void searchTable(String txt) {
         tableCTNK.removeAllRow();
         for (ModelCTNK data : list) {

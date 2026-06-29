@@ -42,6 +42,12 @@ public class InsertAndUpdate_Staff_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo Form. Kiểm tra biến đối tượng 'data' được truyền vào từ form Quản lý.
+     * - Nếu data == null -> Bật chế độ THÊM MỚI (insert = true), tạo ID tự động.
+     * - Nếu data != null -> Bật chế độ CẬP NHẬT (insert = false), hiển thị thông tin cũ lên UI.
+     * Đồng thời xử lý ẩn/hiện nút "Sa thải" / "Ngưng kinh doanh" tùy theo trạng thái.
+     */
     public void init() {
         service = new ServiceAdmin();
         obj = new MS_Warning(Main_Admin_Frame.getFrames()[0], true);
@@ -79,6 +85,11 @@ public class InsertAndUpdate_Staff_Form extends javax.swing.JPanel {
 
     }
 
+    /**
+     * (Chỉ dùng cho chức năng THÊM MỚI).
+     * Gọi xuống Service lấy ID tiếp theo trong CSDL (MAX(id) + 1) để set tự động
+     * cho Nhân viên / Món ăn mới nhằm tránh trùng lặp Khóa chính.
+     */
     public void initID() {
         try {
             data.setId_NV(service.getNextID_NV());
@@ -366,6 +377,15 @@ public class InsertAndUpdate_Staff_Form extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Xử lý sự kiện khi bấm nút "Xác nhận" (Thêm hoặc Sửa).
+     * 1. Kiểm tra validation: Báo lỗi nếu textfield bị bỏ trống.
+     * 2. Nếu hợp lệ, gom dữ liệu từ giao diện set vào đối tượng Model.
+     * 3. Kiểm tra cờ 'insert':
+     * - Nếu true: Gọi hàm insert() của Service để thực thi câu lệnh INSERT INTO.
+     * - Nếu false: Gọi hàm update() của Service để thực thi câu lệnh UPDATE.
+     * 4. Quay trở lại màn hình danh sách sau khi thao tác thành công.
+     */
     private void cmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOKActionPerformed
         if (insert) {
             //Thêm mới
@@ -402,6 +422,11 @@ public class InsertAndUpdate_Staff_Form extends javax.swing.JPanel {
         main.showForm(new StaffManagement_Form(user, main));
     }//GEN-LAST:event_cmdCancelActionPerformed
 
+    /**
+     * Validation chặn nhập chữ.
+     * Bắt sự kiện bàn phím trên TextField (Số điện thoại / Đơn giá).
+     * Chặn mọi ký tự nhập vào không phải là số (0-9) hoặc các phím chức năng (Backspace, Delete).
+     */
     private void txttSDTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttSDTKeyTyped
         char c = evt.getKeyChar();
         if (!((c >= '0') && (c <= '9')

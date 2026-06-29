@@ -47,6 +47,11 @@ public class FoodMenu_Form extends javax.swing.JPanel {
         
     }
 
+    /**
+     * Khởi tạo giao diện Gọi món.
+     * Lấy thông tin khách hàng, tìm hóa đơn chưa thanh toán hiện tại của khách.
+     * Cài đặt text và icon cho tiêu đề menu tương ứng với danh mục (Aries, Taurus...).
+     */
     public void init() {
         try {
             panel.setLayout(new WrapLayout(WrapLayout.LEADING, 20, 20));
@@ -121,6 +126,11 @@ public class FoodMenu_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Tải danh sách Món ăn theo danh mục (type) từ cơ sở dữ liệu.
+     * Duyệt qua danh sách, tạo các đối tượng UI CardMonAn và thêm vào Panel hiển thị.
+     * Truyền kèm theo đối tượng HoaDon để phục vụ chức năng "Thêm vào giỏ" bên trong Card.
+     */
     public void initMenuFood() {
         try {
             list = service.MenuFood(type);
@@ -132,6 +142,10 @@ public class FoodMenu_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Tìm kiếm món ăn cục bộ trên giao diện dựa vào từ khóa tên món.
+     * Chỉ thao tác trên list đang có trong RAM để đảm bảo tốc độ lọc tức thời.
+     */
     public void searchFood(String txt) {
         panel.removeAll();
         for (ModelMonAn data : list) {
@@ -143,6 +157,10 @@ public class FoodMenu_Form extends javax.swing.JPanel {
         panel.revalidate();
     }
 
+    /**
+     * Cập nhật lại danh sách hiển thị món ăn theo tiêu chí sắp xếp 
+     * (Tên A->Z, Giá tăng dần, Giá giảm dần) được chọn từ ComboBox.
+     */
     public void initMenuFoodOrderby(String txt) {
         try {
             list = service.MenuFoodOrder(type, txt);
@@ -316,6 +334,10 @@ public class FoodMenu_Form extends javax.swing.JPanel {
         initMenuFoodOrderby((String) orderby.getSelectedItem());
     }//GEN-LAST:event_orderbyActionPerformed
 
+    /**
+     * Xử lý sự kiện khi khách bấm nút "XEM HÓA ĐƠN".
+     * Lấy dữ liệu hóa đơn mới nhất từ DB, sau đó khởi tạo và hiển thị form thanh toán (MS_PayBill).
+     */
     private void cmdShowBillActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             // Cập nhật lại dữ liệu Hóa đơn mới nhất từ DB

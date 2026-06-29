@@ -62,14 +62,22 @@ public class MainForm extends javax.swing.JPanel {
     // XỬ LÝ DATABASE: KIỂM TRA PHIÊN & THÔNG BÁO TỪ BẾP
     // =========================================================================
 
-    
-
+    /**
+     * Khởi tạo và chạy Timer ngầm để theo dõi tiến độ món ăn.
+     * Cứ mỗi 5 giây, Timer sẽ gọi hàm checkForCompletedDishes() để kiểm tra xem
+     * có món nào được bếp nấu xong chưa.
+     */
     private void startOrderTracking() {
         notificationTimer = new javax.swing.Timer(5000, e -> checkForCompletedDishes());
         notificationTimer.setRepeats(true);
         notificationTimer.start();
     }
 
+    /**
+     * Kiểm tra trạng thái phiên làm việc hiện tại của khách hàng.
+     * Truy vấn CSDL xem khách hàng này có hóa đơn nào đang "Chưa thanh toán" hay không.
+     * Nếu có, lưu lại ID Hóa Đơn và ID Bàn để xử lý các nghiệp vụ gọi món tiếp theo.
+     */
     private void checkActiveSession() {
         String sql = "SELECT ID_HoaDon, ID_Ban FROM HoaDon WHERE ID_KH = ? AND Trangthai = 'Chua thanh toan'";
         
@@ -98,6 +106,12 @@ public class MainForm extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Lắng nghe và thông báo món ăn hoàn thành từ Bếp.
+     * 1. Tìm các món thuộc Hóa đơn hiện tại có trạng thái "Hoan thanh" (do bếp bấm).
+     * 2. Nếu có, lập tức UPDATE CSDL chuyển trạng thái thành "Da giao" để khóa dòng này lại (tránh thông báo lặp).
+     * 3. Bật hộp thoại (JOptionPane) báo cho khách hàng biết món đã nấu xong.
+     */
     private void checkForCompletedDishes() {
         String sqlCheck = "SELECT ID_MonAn, TenMon FROM KitchenOrders WHERE ID_HoaDon = ? AND TrangThai = 'Hoan thanh'";
         String sqlUpdate = "UPDATE KitchenOrders SET TrangThai = 'Da giao' WHERE ID_HoaDon = ? AND ID_MonAn = ?";

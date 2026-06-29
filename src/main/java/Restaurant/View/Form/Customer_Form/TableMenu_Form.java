@@ -40,6 +40,11 @@ public class TableMenu_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo giao diện Đặt bàn.
+     * Lấy thông tin khách hàng, cấu hình hiển thị Panel dạng WrapLayout.
+     * Đổi icon và text tiêu đề tương ứng với tầng được chọn (Tầng 1, 2, 3).
+     */
     public void init(){
         try {
             customer=service.getCustomer(user.getUserID());
@@ -71,6 +76,12 @@ public class TableMenu_Form extends javax.swing.JPanel {
           
  
     }
+
+    /**
+     * Lấy danh sách các bàn thuộc tầng hiện tại từ cơ sở dữ liệu.
+     * Xóa sạch các thẻ bàn cũ (tránh lỗi đè giao diện), duyệt list tạo các CardBan mới 
+     * và yêu cầu Java Swing ép vẽ lại panel.
+     */
     public void initMenuTable(){
         try {
             list = service.MenuTable(floor);
@@ -102,6 +113,10 @@ public class TableMenu_Form extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Lọc danh sách bàn ngay trên giao diện dựa vào từ khóa tên bàn người dùng nhập.
+     */
     public void searchTable(String txt){
         panel.removeAll();
         for(ModelBan data:list){
@@ -112,6 +127,11 @@ public class TableMenu_Form extends javax.swing.JPanel {
         panel.repaint();
         panel.revalidate();
     }
+
+    /**
+     * Lọc và hiển thị danh sách bàn theo Trạng thái (Còn trống, Đang dùng bữa, Đã đặt...).
+     * Hàm này sẽ gọi xuống Service truy vấn lại DB với điều kiện trạng thái tương ứng.
+     */
     public void initMenuTableState(String txt){
         try {
             list=service.MenuTableState(floor,txt);

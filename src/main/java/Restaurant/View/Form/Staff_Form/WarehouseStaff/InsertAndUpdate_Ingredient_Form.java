@@ -22,6 +22,11 @@ public class InsertAndUpdate_Ingredient_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo giao diện Thêm hoặc Sửa Nguyên liệu.
+     * Kiểm tra đối tượng data: nếu rỗng là chế độ Thêm mới, nếu có dữ liệu là chế độ Sửa 
+     * (hiển thị thông tin cũ lên form).
+     */
     public void init() {
         service = new ServiceStaff();
         if(data==null){
@@ -43,6 +48,9 @@ public class InsertAndUpdate_Ingredient_Form extends javax.swing.JPanel {
         
     }
     
+    /**
+     * Lấy mã ID tự động cho Nguyên liệu mới (chỉ chạy khi ở chế độ Thêm mới).
+     */
     public void initID_NL(){
         try {
             data.setId(service.getNextID_NL());
@@ -252,6 +260,9 @@ public class InsertAndUpdate_Ingredient_Form extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Ràng buộc TextField: Chỉ cho phép nhập ký tự số vào trường Đơn giá nguyên liệu.
+     */
     private void txtdongiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdongiaKeyTyped
         char c = evt.getKeyChar();
         if (!((c >= '0') && (c <= '9')
@@ -262,6 +273,10 @@ public class InsertAndUpdate_Ingredient_Form extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtdongiaKeyTyped
 
+    /**
+     * Nút Xác nhận. Thu thập thông tin từ UI (Tên, Đơn giá, Đơn vị tính).
+     * Kiểm tra cờ trạng thái 'insert' để gọi hàm InsertNL() hoặc UpdateNL() tương ứng xuống CSDL.
+     */
     private void cmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOKActionPerformed
         data.setTenNL(txttenNL.getText().trim());
         data.setDonGia(Integer.parseInt(txtdongia.getText()));

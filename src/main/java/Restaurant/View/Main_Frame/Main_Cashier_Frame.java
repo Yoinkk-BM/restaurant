@@ -18,7 +18,7 @@ public class Main_Cashier_Frame extends JFrame {
         setSize(1280, 800);
         setLocationRelativeTo(null); // Hiển thị ra giữa màn hình
         
-        // Nhúng cái "ruột" CashierPosPanel vào cửa sổ này
+        
         add(new CashierPosPanel());
     }
 

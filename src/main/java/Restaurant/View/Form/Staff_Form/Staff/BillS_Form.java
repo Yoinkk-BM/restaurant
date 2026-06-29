@@ -52,6 +52,10 @@ public class BillS_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Tải danh sách Chi tiết Hóa đơn (CTHD) dựa trên mã Hóa đơn truyền vào.
+     * Đổ dữ liệu (Tên món, số lượng, thành tiền) vào JTable để hiển thị cho khách hàng xác nhận.
+     */
     public void init() {
         serviceS = new ServiceStaff();
         serviceC = new ServiceCustomer();
@@ -82,6 +86,10 @@ public class BillS_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Hiển thị tổng quan tài chính của hóa đơn: Tiền món ăn, Tiền giảm giá và Tổng tiền thanh toán.
+     * Định dạng số liệu thành chuỗi tiền tệ (có dấu phẩy phân cách) trước khi set lên các TextField.
+     */
     public void initCash() {
         txtTienmonan.setText(df.format(bill.getTienMonAn()) + "d");
         txtTiengiam.setText(df.format(bill.getTienGiam()) + "d");
@@ -384,8 +392,13 @@ public class BillS_Form extends javax.swing.JPanel {
                 .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
+    /**
+     * Xử lý sự kiện "Xác nhận Thanh toán".
+     * Cập nhật trạng thái Hóa đơn trong CSDL từ "Chưa thanh toán" sang "Đã thanh toán".
+     * Hiển thị thông báo thành công và điều hướng nhân viên quay lại màn hình Quản lý Bàn.
+     */
     private void cmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOKActionPerformed
         try {
             //Khi NV bấm xác nhận thanh toán, thay đổi trạng thái hóa đơn từ Chưa thanh toán thành đã thanh toán
@@ -416,10 +429,21 @@ public class BillS_Form extends javax.swing.JPanel {
         txtTientra.setText(df.format(Integer.parseInt(txtTienKH.getText()) - bill.getTongtien()) + "d");
     }//GEN-LAST:event_txtTienKHActionPerformed
 
+    /**
+     * Tự động tính toán tiền thối (Tiền trả lại) cho khách.
+     * Bắt sự kiện khi nhân viên nhập xong tiền khách đưa và chuyển trỏ chuột ra khỏi TextField (FocusLost).
+     * Công thức: Tiền trả lại = Tiền khách đưa - Tổng tiền hóa đơn.
+     */
     private void txtTienKHFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTienKHFocusLost
         txtTientra.setText(df.format(Integer.parseInt(txtTienKH.getText()) - bill.getTongtien()) + "d");
-    }//GEN-LAST:event_txtTienKHFocusLost
+    }
 
+    /**
+     * Xử lý sự kiện "Xuất Hóa đơn".
+     * Sử dụng thư viện Apache PDFBox để tạo file PDF động.
+     * Vẽ thủ công các thành phần: Tiêu đề, Thông tin khách hàng, Vẽ bảng CTHD (duyệt tọa độ x, y để in text),
+     * và phần tổng tiền. Cuối cùng lưu file ra thư mục 'ExportBill' với tên kèm ID Hóa đơn.
+     */
     private void cmdExportBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdExportBillActionPerformed
         //Tạo Document
         PDDocument invc = new PDDocument();
