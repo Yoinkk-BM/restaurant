@@ -38,6 +38,11 @@ public class Main_Staff_Frame extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icons/information-desk.png")));
     }
 
+    /**
+     * Khởi tạo bộ khung giao diện của Nhân viên Phục vụ/Lễ tân.
+     * Thiết lập bố cục MigLayout, nạp MenuS (Menu Nhân viên) và MainForm.
+     * Xử lý điều hướng (Routing) khi nhân viên chọn các tác vụ: Đặt bàn, Quản lý Khách hàng hoặc Xem tài khoản.
+     */
     public void init() {
         layout = new MigLayout("fill", "0[]0[100%, fill]0", "0[fill, top]0");
         bg.setLayout(layout);

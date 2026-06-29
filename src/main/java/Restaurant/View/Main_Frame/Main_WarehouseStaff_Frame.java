@@ -40,6 +40,11 @@ public class Main_WarehouseStaff_Frame extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icons/warehouse.png")));
     }
 
+    /**
+     * Khởi tạo giao diện làm việc của Nhân viên Kho.
+     * Chia bố cục MigLayout, gắn thanh Menu chuyên biệt cho nghiệp vụ Kho (MenuStaff).
+     * Khai báo các sự kiện chuyển qua lại giữa các màn hình: Thông tin kho, Phiếu nhập, Phiếu xuất, Nguyên liệu.
+     */
     public void init() {
         layout = new MigLayout("fill", "0[]0[100%, fill]0", "0[fill, top]0");
         bg.setLayout(layout);

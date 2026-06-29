@@ -41,6 +41,13 @@ public class Main_Admin_Frame extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icons/businessman.png")));
     }
 
+    /**
+     * Khởi tạo cấu trúc giao diện chính của Quản lý (Admin).
+     * Sử dụng thư viện MigLayout để chia bố cục màn hình: 
+     * Bên trái là thanh Menu (MenuA), bên phải là khu vực hiển thị các Form chức năng (MainForm).
+     * Gắn bộ lắng nghe sự kiện (EventMenuSelected) để chuyển đổi giữa các Form (Thống kê, Nhân sự, Thực đơn...) 
+     * khi Admin click vào các mục tương ứng trên Menu.
+     */
     public void init() {
         layout = new MigLayout("fill", "0[]0[100%, fill]0", "0[fill, top]0");
         bg.setLayout(layout);
@@ -150,14 +157,7 @@ public class Main_Admin_Frame extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main_Admin_Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+        
 
         /* Create and display the form */
         
@@ -169,6 +169,10 @@ public class Main_Admin_Frame extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Điểm khởi chạy luồng giao diện cho Quản lý. 
+     * Thiết lập giao diện theo chuẩn Windows, gọi kết nối Database và hiển thị Frame.
+     */
     public static void main(ModelNguoiDung user) {
         
         try {

@@ -44,6 +44,11 @@ public class Main_Customer_Frame extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Icons/restaurant (1).png")));
     }
     
+    /**
+     * Khởi tạo cấu trúc giao diện chính dành cho Khách Hàng.
+     * Áp dụng MigLayout để chia màn hình. Khởi tạo Menu dành riêng cho khách hàng
+     * và lắng nghe sự kiện chuyển trang (Gọi món, Đặt bàn, Xem Bill, Voucher, Tài khoản).
+     */
     public void init(){
         layout = new MigLayout("fill","0[]0[100%, fill]0","0[fill, top]0");
         bg.setLayout(layout);
