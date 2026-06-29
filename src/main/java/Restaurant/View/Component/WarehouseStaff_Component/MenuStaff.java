@@ -15,12 +15,18 @@ import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
+// Panel điều hướng dành cho nhân viên kho.
+// Chứa các mục quản lý nguyên liệu, thông tin kho, nhập/xuất kho, tài khoản và đăng xuất.
 public class MenuStaff extends javax.swing.JPanel {
 
+    // Gắn bộ xử lý sự kiện khi một mục menu được chọn hoặc tương tác với giao diện.
+    // Đây là cách cho phép lớp bên ngoài nhận thông tin từ menu và điều khiển luồng hành động tiếp theo.
     public void addEvent(EventMenuSelected event) {
         this.event = event;
     }
 
+    // Cho phép bật hoặc tắt khả năng mở/đóng submenu.
+    // Khi bị vô hiệu hóa, menu sẽ không phản hồi thao tác người dùng để tránh chuyển hướng sai.
     public void setEnableMenu(boolean enableMenu) {
         this.enableMenu = enableMenu;
     }
@@ -29,6 +35,8 @@ public class MenuStaff extends javax.swing.JPanel {
     private EventMenuSelected event;
     private boolean enableMenu = true;
 
+    // Constructor khởi tạo giao diện menu cho nhân viên kho.
+    // Ban đầu sẽ tạo các thành phần giao diện, thiết lập thanh cuộn tuỳ chỉnh và sắp xếp các mục menu theo kiểu dọc.
     public MenuStaff() {
         initComponents();
         setOpaque(false);
@@ -39,7 +47,9 @@ public class MenuStaff extends javax.swing.JPanel {
 
     }
 
-    //Khởi tạo data cho Menu 
+    // Khởi tạo danh sách các mục menu cho nhân viên kho.
+    // Mỗi mục được gắn một icon và một nhãn hiển thị để người dùng dễ nhận biết chức năng tương ứng.
+    // Các mục này thường đại diện cho các tác vụ quản lý nguyên liệu, kho và tài khoản cá nhân.
     public void initMenuItem() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/nglieu.png")), "Quản lý Nguyên Liệu"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/kho.png")), "Thông tin Kho"));
@@ -52,11 +62,14 @@ public class MenuStaff extends javax.swing.JPanel {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/logout.png")), "Đăng Xuất"));
     }
 
-    //Add Panel MenuIteam vào Panel Menu
+    // Thêm một mục menu mới vào panel chính bằng cách tạo một đối tượng MenuItem.
+    // MenuItem sẽ nhận dữ liệu nội dung, sự kiện mở/đóng và vị trí index để hiển thị đúng trong danh sách.
     private void addMenu(ModelMenu menu) {
         panel.add(new MenuItem(menu, getEventMenu(), event, panel.getComponentCount()), "h 40!");
     }
 
+    // Tạo bộ xử lý sự kiện cho thao tác mở hoặc đóng menu con.
+    // Khi người dùng nhấn vào mục, hệ thống sẽ gọi animation để hiển thị hoặc ẩn nội dung liên quan.
     private EventMenu getEventMenu() {
         return new EventMenu() {
             @Override
@@ -133,6 +146,7 @@ public class MenuStaff extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    // Vẽ nền cho panel bằng gradient màu để tạo hiệu ứng giao diện hiện đại hơn.
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
