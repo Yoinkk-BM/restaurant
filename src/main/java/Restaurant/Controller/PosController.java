@@ -83,11 +83,11 @@ public class PosController {
         }
     }
 
-    // =========================================================================
-    // PHẦN 2: CODE MỚI DÀNH RIÊNG CHO LUỒNG THU NGÂN (Lấy theo Bàn/Tầng)
-    // =========================================================================
+    
+    // PHẦN 2: CODE DÀNH RIÊNG CHO LUỒNG THU NGÂN (Lấy theo Bàn/Tầng)
+    
 
-    // Hàm lấy danh sách các Hóa đơn chưa thanh toán (Đổ vào Bảng bên trái)
+    // Hàm lấy danh sách các Hóa đơn chưa thanh toán 
     public List<Object[]> layDanhSachHoaDonChuaThanhToan() {
         List<Object[]> list = new ArrayList<>();
         String sql = "SELECT h.ID_HoaDon, b.Vitri, b.TenBan, h.Tongtien " +

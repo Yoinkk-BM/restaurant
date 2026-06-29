@@ -24,7 +24,11 @@ public class RevenueReport_Form extends javax.swing.JPanel {
         initComponents();
         init();
     }
-
+   
+    /**
+     * Khởi tạo giao diện Báo cáo Doanh thu.
+     * Thiết lập ngày hiện tại, tính toán dữ liệu cho các Card thông số và vẽ Biểu đồ.
+     */
     public void init() {
         service = new ServiceAdmin();
         df = new DecimalFormat("##,###,###");
@@ -36,6 +40,12 @@ public class RevenueReport_Form extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Tính toán và hiển thị dữ liệu lên 3 thẻ Card: Doanh thu, Chi phí, Lợi nhuận.
+     * Đồng thời, nếu chọn bộ lọc "Tháng này", hàm sẽ lấy thêm dữ liệu của tháng trước 
+     * để tính toán phần trăm (%) Tăng/Giảm và hiển thị ra phần mô tả của Card.
+     * * @param filter Bộ lọc thời gian (Hôm nay, Tháng này, Năm này)
+     */
     public void initCard(String filter) {
         try {
             int revenue = 0;
@@ -87,6 +97,11 @@ public class RevenueReport_Form extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Cấu hình và đổ dữ liệu vào Biểu đồ đường (Line Chart).
+     * Khởi tạo 3 chú thích (Legend): Doanh thu, Chi phí, Lợi nhuận với 3 màu khác nhau.
+     * Gọi Service lấy list dữ liệu nhóm theo từng tháng để vẽ các điểm trên biểu đồ.
+     */
     public void initChart() {
         lineChart.addLegend("Doanh thu", new Color(101, 78, 163), new Color(101, 78, 163));
         lineChart.addLegend("Chi Phí", new Color(109, 222, 202), new Color(109, 222, 202));

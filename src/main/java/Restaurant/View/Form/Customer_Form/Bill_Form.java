@@ -33,6 +33,11 @@ public class Bill_Form extends javax.swing.JPanel {
         init();
     }
 
+
+    /**
+     * Khởi tạo màn hình Lịch sử giao dịch (Hóa đơn) của Khách hàng.
+     * Nạp dữ liệu doanh số và danh sách các hóa đơn đã thanh toán lên bảng.
+     */
     public void init(){
         txtSearch.setHint("Tìm kiếm Hóa Đơn . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -43,6 +48,10 @@ public class Bill_Form extends javax.swing.JPanel {
         initTable();
         
     }
+
+    /**
+     * Lấy thông tin khách hàng và hiển thị Tổng Doanh Số (số tiền khách đã chi tiêu) lên UI.
+     */
     public void getUserSales(){
         try {
             customer=service.getCustomer(user.getUserID());
@@ -51,6 +60,11 @@ public class Bill_Form extends javax.swing.JPanel {
             Logger.getLogger(Bill_Form.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    /**
+     * Truy vấn danh sách toàn bộ các Hóa Đơn thuộc về Khách hàng này.
+     * Đổ dữ liệu định dạng tiền tệ (Tiền món, Tiền giảm do voucher, Tổng tiền) vào DefaultTableModel.
+     */
     public void initTable(){
         try {
             list = service.getListHD(customer.getID_KH());
@@ -63,6 +77,10 @@ public class Bill_Form extends javax.swing.JPanel {
             ex.printStackTrace();
         }
     }
+
+    /**
+     * Tìm kiếm nhanh hóa đơn trong list hiện hành dựa vào ID (Mã Hóa Đơn).
+     */
     public void searchTable(String txt){
         tableHD.removeAllRow();
         for(ModelHoaDon data:list){
@@ -75,6 +93,11 @@ public class Bill_Form extends javax.swing.JPanel {
         tableHD.repaint();
         tableHD.revalidate();
     }
+
+    /**
+     * Lọc lịch sử Hóa đơn theo mức tổng tiền (Dưới 1 triệu, Từ 1-5 triệu, Trên 5 triệu...).
+     * Truy vấn lại từ Database với điều kiện giới hạn số tiền và render lại JTable.
+     */
     public void initTableHDbyTotal(String byTotal){
         try {
             list=service.getListHDOrder(customer.getID_KH(),byTotal);

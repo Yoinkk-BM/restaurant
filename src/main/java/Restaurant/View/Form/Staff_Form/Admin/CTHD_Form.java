@@ -26,6 +26,11 @@ public class CTHD_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo Form Chi tiết.
+     * Nhận đối tượng Hóa Đơn (bill) từ màn hình trước truyền sang.
+     * Hiển thị ID và Ngày lên các label, sau đó load danh sách chi tiết (Nguyên liệu/Món ăn) tương ứng.
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm Món Ăn  . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -38,6 +43,11 @@ public class CTHD_Form extends javax.swing.JPanel {
         txtidHD.setText(bill.getIdHoaDon() + "");
     }
 
+    /**
+     * Tải danh sách Chi tiết từ CSDL.
+     * Dùng ID của Phiếu truyền xuống Service thực thi câu lệnh SELECT ... WHERE ID_NK = ?
+     * Trả về danh sách chi tiết và duyệt đổ lên JTable.
+     */
     public void initTable() {
         try {
             list = service.getCTHD(bill.getIdHoaDon());
@@ -49,6 +59,10 @@ public class CTHD_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Tìm kiếm cục bộ (trong list đã load) các Nguyên liệu / Món ăn
+     * dựa vào từ khóa người dùng nhập, sau đó render lại bảng.
+     */
     public void searchTable(String txt) {
         tableCTHD.removeAllRow();
         for (ModelCTHD data : list) {

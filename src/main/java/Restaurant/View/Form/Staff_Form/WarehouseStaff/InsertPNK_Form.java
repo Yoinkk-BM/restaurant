@@ -39,6 +39,11 @@ public class InsertPNK_Form extends javax.swing.JPanel {
         
     }
 
+    /**
+     * Khởi tạo form lập Phiếu Nhập Kho.
+     * Cài đặt TableModelListener để theo dõi cột "Số lượng Nhập". Nếu có thay đổi, 
+     * lưu ngay giá trị đó vào danh sách nguyên liệu hiện tại.
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm Nguyên Liệu . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -70,6 +75,9 @@ public class InsertPNK_Form extends javax.swing.JPanel {
         
     }
 
+    /**
+     * Tự động sinh ID Phiếu Nhập Kho kế tiếp từ CSDL, set mã NV thực hiện và ngày nhập.
+     */
     public void initPNK() {
         try {
             txtmaNK.setText(service.getNextID_NK() + "");
@@ -85,6 +93,9 @@ public class InsertPNK_Form extends javax.swing.JPanel {
         lbDate.setText("Ngày hiện tại: " + simpleDateFormat.format(new Date()));
     }
 
+    /**
+     * Tải danh sách các nguyên liệu từ CSDL, cài đặt ô Số lượng nhập mặc định là 0.
+     */
     public void initTable() {
         try {
             list = service.MenuKhoNL();
@@ -97,6 +108,9 @@ public class InsertPNK_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Lọc và hiển thị nguyên liệu trên bảng theo từ khóa tên.
+     */
     public void searchTable(String txt) {
         tableCTNK.removeAllRow();
         for (ModelKho data : list) {
@@ -341,6 +355,11 @@ public class InsertPNK_Form extends javax.swing.JPanel {
         searchTable(txtSearch.getText().trim());
     }//GEN-LAST:event_txtSearchActionPerformed
 
+    /**
+     * Xử lý sự kiện Xác nhận Thêm Phiếu Nhập. 
+     * Gom thông tin phiếu mẹ (ModelPNK) và danh sách chi tiết truyền xuống Service
+     * để thực thi lệnh INSERT vào cơ sở dữ liệu.
+     */
     private void cmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOKActionPerformed
         int idNK=Integer.parseInt(txtmaNK.getText());
         int idNV=Integer.parseInt(txtmaNV.getText());
@@ -358,6 +377,9 @@ public class InsertPNK_Form extends javax.swing.JPanel {
         main.showForm(new Import_Form(user, main));
     }//GEN-LAST:event_cmdCancelActionPerformed
 
+    /**
+     * Ràng buộc nhập liệu: Khóa phím chữ, chỉ cho phép gõ số vào ô Số lượng nhập.
+     */
     private void tableCTNKKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableCTNKKeyTyped
         char c = evt.getKeyChar();
         if (!((c >= '0') && (c <= '9')

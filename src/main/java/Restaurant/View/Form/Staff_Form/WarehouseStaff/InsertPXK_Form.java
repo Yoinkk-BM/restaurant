@@ -39,6 +39,11 @@ public class InsertPXK_Form extends javax.swing.JPanel {
         
     }
 
+    /**
+     * Khởi tạo giao diện lập Phiếu Xuất Kho.
+     * Cài đặt lắng nghe sự kiện trên bảng (TableModelListener): Khi người dùng nhập số lượng xuất, 
+     * lập tức cập nhật giá trị đó vào biến 'SlTon' của đối tượng ModelKho.
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm Nguyên Liệu . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -70,6 +75,10 @@ public class InsertPXK_Form extends javax.swing.JPanel {
         
     }
 
+    /**
+     * Sinh mã Phiếu Xuất Kho tự động từ CSDL, lấy mã Nhân viên đang lập phiếu và set ngày hiện tại.
+     * (Lưu ý: Tên hàm là initPNK nhưng đang xử lý logic cho form PXK).
+     */
     public void initPNK() {
         try {
             txtmaXK.setText(service.getNextID_XK() + "");
@@ -81,10 +90,16 @@ public class InsertPXK_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Hiển thị ngày hệ thống hiện tại lên Label.
+     */
     public void setCurrentDate() {
         lbDate.setText("Ngày hiện tại: " + simpleDateFormat.format(new Date()));
     }
 
+    /**
+     * Tải toàn bộ nguyên liệu lên bảng, set mặc định cột Số lượng xuất = 0 để nhân viên nhập.
+     */
     public void initTable() {
         try {
             list = service.MenuKhoNL();
@@ -341,6 +356,11 @@ public class InsertPXK_Form extends javax.swing.JPanel {
         searchTable(txtSearch.getText().trim());
     }//GEN-LAST:event_txtSearchActionPerformed
 
+    /**
+     * Xử lý xác nhận lưu Phiếu Xuất Kho. 
+     * Thu thập thông tin (mã phiếu, mã NV, ngày) đóng gói vào ModelPXK.
+     * Gọi Service để Insert phiếu mẹ, đồng thời quét list nguyên liệu để tạo các Chi tiết Xuất kho.
+     */
     private void cmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOKActionPerformed
         int idXK=Integer.parseInt(txtmaXK.getText());
         int idNV=Integer.parseInt(txtmaNV.getText());
@@ -358,6 +378,9 @@ public class InsertPXK_Form extends javax.swing.JPanel {
         main.showForm(new Export_Form(user, main));
     }//GEN-LAST:event_cmdCancelActionPerformed
 
+    /**
+     * Ràng buộc nhập liệu: Chặn gõ chữ cái vào ô Số lượng xuất trên bảng JTable.
+     */
     private void tableCTNKKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tableCTNKKeyTyped
         char c = evt.getKeyChar();
         if (!((c >= '0') && (c <= '9')

@@ -33,6 +33,11 @@ private MS_ChangePassword changepass;
         init();
     }
 
+    /**
+     * Khởi tạo màn hình Tài khoản Nhân viên.
+     * Chuẩn bị các icon ẩn/hiện mật khẩu, nạp thông tin đăng nhập (User) 
+     * và thông tin hồ sơ nhân viên (Staff) lên giao diện.
+     */
     public void init() {
         service = new ServiceStaff();
         changepass = new MS_ChangePassword(Main_Staff_Frame.getFrames()[0], true);
@@ -43,6 +48,9 @@ private MS_ChangePassword changepass;
         initStaff_information();
     }
 
+    /**
+     * Đổ dữ liệu tài khoản hệ thống (Email, Mật khẩu, Vai trò) của nhân viên lên các textfield.
+     */
     public void initUser_information() {
         txtemail.setText(user.getEmail());
         txtmatkhau.setText(user.getPassword());
@@ -50,6 +58,10 @@ private MS_ChangePassword changepass;
         txtmatkhau.setSuffixIcon(hide);
     }
 
+    /**
+     * Truy vấn CSDL để lấy thông tin hồ sơ chi tiết của nhân viên đang đăng nhập.
+     * Hiển thị các thông tin: Mã NV, Tên, Ngày vào làm, SĐT, Chức vụ, Mã Quản lý.
+     */
     public void initStaff_information() {
         try {
             staff= service.getStaff(user.getUserID());
@@ -66,6 +78,10 @@ private MS_ChangePassword changepass;
         
     }
 
+    /**
+     * Hiển thị hộp thoại xác nhận khi nhân viên thay đổi Tên hiển thị của mình.
+     * Nếu xác nhận, hệ thống sẽ cập nhật tên mới vào Database.
+     */
     private void confirmRename(String message) {
         MS_ConfirmRename obj = new MS_ConfirmRename(Main_Staff_Frame.getFrames()[0], true);
         obj.ConfirmReName(message, staff);
@@ -373,6 +389,10 @@ private MS_ChangePassword changepass;
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Xử lý sự kiện khi bấm (Click) vào ô Mật khẩu.
+     * Thay đổi icon con mắt (Show/Hide) và chuyển đổi định dạng hiển thị ký tự (Dấu * hoặc Text rõ).
+     */
     private void txtmatkhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtmatkhauMouseClicked
         if (txtmatkhau.getSuffixIcon().equals(hide)) {
             txtmatkhau.setSuffixIcon(show);
@@ -393,6 +413,10 @@ private MS_ChangePassword changepass;
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSDTActionPerformed
 
+    /**
+     * Xử lý sự kiện "Đổi mật khẩu". 
+     * Bật Form Dialog đổi mật khẩu và cập nhật lại ô text nếu thao tác thành công.
+     */
     private void cmdDMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdDMKActionPerformed
         changepass.ChangePassword(user);
         txtmatkhau.setText(user.getPassword());

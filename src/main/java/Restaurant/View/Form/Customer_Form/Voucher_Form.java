@@ -37,6 +37,11 @@ public class Voucher_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo giao diện kho Voucher.
+     * Cấu hình WrapLayout cho panel, lấy thông tin khách hàng, hóa đơn hiện tại 
+     * và đổ toàn bộ dữ liệu Voucher khả dụng lên giao diện.
+     */
     public void init(){
         panel.setLayout(new WrapLayout(WrapLayout.LEADING,20,20));
         txtSearch.setHint("Tìm kiếm Voucher . . .");
@@ -47,6 +52,11 @@ public class Voucher_Form extends javax.swing.JPanel {
         initMenuVoucher();
         
     }
+
+    /**
+     * Truy vấn thông tin Khách hàng và Hóa đơn hiện hành từ DB.
+     * Hiển thị số Điểm Tích Lũy (Xu) hiện có của khách hàng lên giao diện.
+     */
     public void getCustomerAndBill(){
         try {
             customer=service.getCustomer(user.getUserID());
@@ -56,6 +66,12 @@ public class Voucher_Form extends javax.swing.JPanel {
             Logger.getLogger(Voucher_Form.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    /**
+     * Tải toàn bộ danh mục Voucher từ CSDL.
+     * Khởi tạo các UI CardVoucher và nạp vào Panel. Truyền theo thông tin KH và Hóa đơn 
+     * để kiểm tra điều kiện áp dụng voucher bên trong Card.
+     */
     public void initMenuVoucher(){
         try {
             list = service.MenuVoucher();
@@ -66,6 +82,10 @@ public class Voucher_Form extends javax.swing.JPanel {
             ex.printStackTrace();
         }
     }
+
+    /**
+     * Tìm kiếm nhanh voucher cục bộ trên màn hình dựa vào đoạn mô tả (description).
+     */
     public void searchTable(String txt){
         panel.removeAll();
         for(ModelVoucher data:list){
@@ -76,6 +96,11 @@ public class Voucher_Form extends javax.swing.JPanel {
         panel.repaint();
         panel.revalidate();
     }
+
+    /**
+     * Lọc danh sách Voucher theo điều kiện số điểm tích lũy cần thiết 
+     * (Dưới 300 xu, Từ 300-500 xu, Trên 500 xu) từ DB và vẽ lại giao diện.
+     */
     public void initMenuVoucherbyPoint(String bypoint){
         try {
             list=service.MenuVoucherbyPoint(bypoint);

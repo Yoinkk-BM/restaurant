@@ -27,6 +27,11 @@ public class Warehouse_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo giao diện Thông tin Kho chung.
+     * Cài đặt thanh cuộn, nạp dữ liệu toàn bộ nguyên liệu vào bảng, 
+     * tính tổng số lượng tồn kho và hiển thị ngày hiện tại.
+     */
     public void init(){
         txtSearch.setHint("Tìm kiếm Nguyên Liệu . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -37,6 +42,10 @@ public class Warehouse_Form extends javax.swing.JPanel {
         getSLTonkho();
         setCurrentDate();
     }
+
+    /**
+     * Tính tổng số lượng tất cả các nguyên liệu đang còn tồn trong kho để hiển thị lên giao diện.
+     */
     public void getSLTonkho(){
         try {
             txtTong.setText(service.getSLNL_TonKho()+"");
@@ -44,10 +53,18 @@ public class Warehouse_Form extends javax.swing.JPanel {
             Logger.getLogger(Warehouse_Form.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    /**
+     * Cập nhật nhãn hiển thị ngày hệ thống hiện tại.
+     */
     public void setCurrentDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-YYYY");
         lbDate.setText("Ngày hiện tại: "+simpleDateFormat.format(new Date()));
     }
+
+    /**
+     * Tải danh mục và số lượng tồn hiện tại của từng nguyên liệu từ CSDL và vẽ lên bảng.
+     */
     public void initTable(){
         try {
             list = service.MenuKhoNL();
@@ -58,6 +75,10 @@ public class Warehouse_Form extends javax.swing.JPanel {
             ex.printStackTrace();
         }
     }
+
+    /**
+     * Lọc kết quả tìm kiếm Nguyên liệu cục bộ trên JTable dựa vào tên nguyên liệu.
+     */
     public void searchTable(String txt){
         tableNL.removeAllRow();
         for(ModelKho data:list){

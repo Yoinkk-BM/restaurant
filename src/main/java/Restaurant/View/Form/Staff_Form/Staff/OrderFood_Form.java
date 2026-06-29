@@ -67,6 +67,11 @@ public class OrderFood_Form extends javax.swing.JPanel {
         });
     }
 
+    /**
+     * Tải danh sách Món ăn theo danh mục (Type).
+     * Tạo các đối tượng UI CardMonAn cho mỗi món và nạp vào giao diện.
+     * Đồng thời truyền theo đối tượng HoaDon để xử lý logic thêm món trực tiếp vào hóa đơn hiện tại.
+     */
     public void initMenuFood(String type) {
         try {
             list = serviceC.MenuFood(type);
@@ -92,6 +97,10 @@ public class OrderFood_Form extends javax.swing.JPanel {
         panel.revalidate();
     }
 
+    /**
+     * Sắp xếp danh sách món ăn hiện hành (theo Tên A->Z, Giá tăng dần, Giá giảm dần).
+     * Truy vấn lại DB với câu lệnh ORDER BY tương ứng và render lại các CardMonAn.
+     */
     public void initMenuFoodOrderby(String txt) {
         try {
             list = serviceC.MenuFoodOrder((String) TypeMenu.getSelectedItem(), txt);

@@ -28,6 +28,11 @@ public class CTNK_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo Form Chi tiết.
+     * Nhận đối tượng Phiếu Nhập Kho (pnk) từ màn hình trước truyền sang.
+     * Hiển thị ID và Ngày lên các label, sau đó load danh sách chi tiết (Nguyên liệu/Món ăn) tương ứng.
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm NL . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -42,6 +47,11 @@ public class CTNK_Form extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Tải danh sách Chi tiết từ CSDL.
+     * Dùng ID của Phiếu truyền xuống Service thực thi câu lệnh SELECT ... WHERE ID_NK = ?
+     * Trả về danh sách chi tiết và duyệt đổ lên JTable.
+     */
     public void initTable() {
         try {
             list = service.getCTNK(pnk.getIdNK());
@@ -54,6 +64,10 @@ public class CTNK_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Tìm kiếm cục bộ (trong list đã load) các Nguyên liệu / Món ăn
+     * dựa vào từ khóa người dùng nhập, sau đó render lại bảng.
+     */
     public void searchTable(String txt) {
         tableCTNK.removeAllRow();
         for (ModelCTNK data : list) {

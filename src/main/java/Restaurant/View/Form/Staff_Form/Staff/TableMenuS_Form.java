@@ -67,8 +67,14 @@ public class TableMenuS_Form extends javax.swing.JPanel {
             Logger.getLogger(TableMenuS_Form.class.getName()).log(Level.SEVERE, null, ex);
         }
           
- 
+        
     }
+
+    /**
+     * Tải danh sách tất cả các Bàn thuộc một Tầng cụ thể (floor) từ Database.
+     * Duyệt qua danh sách và khởi tạo các đối tượng UI CardBanS (thẻ hiển thị bàn), 
+     * sau đó thêm (add) các thẻ này vào Panel chứa (WrapLayout).
+     */
     public void initMenuTable(){
         try {           
             list = serviceC.MenuTable(floor);
@@ -89,6 +95,12 @@ public class TableMenuS_Form extends javax.swing.JPanel {
         panel.repaint();
         panel.revalidate();
     }
+
+    /**
+     * Lọc danh sách bàn theo trạng thái (Tất cả, Còn trống, Đang dùng bữa, Đã đặt trước).
+     * Xóa sạch Panel hiện tại, gọi Service truy vấn danh sách bàn theo điều kiện mới,
+     * và vẽ lại các CardBanS lên giao diện.
+     */
     public void initMenuTableState(String txt){
         try {
             list=serviceC.MenuTableState(floor,txt);

@@ -39,6 +39,10 @@ public class Export_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo màn hình Quản lý Xuất Kho.
+     * Cập nhật số lượng phiếu, tải danh sách lên bảng và cài đặt logic mở form cho nút Thêm/Chi tiết.
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm Phiếu XK . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -76,6 +80,9 @@ public class Export_Form extends javax.swing.JPanel {
         lbDate.setText("Ngày hiện tại: "+simpleDateFormat.format(new Date()));
     }
 
+    /**
+     * Lấy tổng số lượng Phiếu Xuất Kho đã được tạo để hiển thị lên Label thống kê.
+     */
     public void setSL_PNK() {
         try {
             txtslPXK.setText(service.getSLPXK()+"");
@@ -84,6 +91,9 @@ public class Export_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Truy vấn danh sách Phiếu Xuất (Mã XK, Mã NV, Ngày xuất) từ CSDL và đổ dữ liệu vào JTable.
+     */
     public void initTable() {
         try {
             list = service.MenuPXK();
@@ -95,6 +105,9 @@ public class Export_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Tìm kiếm nhanh trong danh sách JTable theo Mã Phiếu Xuất (ID_XK).
+     */
     public void searchTable(String txt) {
         tablePXK.removeAllRow();
         for (ModelPXK data : list) {

@@ -32,6 +32,11 @@ public class StaffManagement_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo giao diện Quản lý.
+     * Định dạng UI, tải danh sách từ CSDL lên bảng và gắn sự kiện (Event Listener)
+     * cho các nút Thêm và Sửa để chuyển sang Form chi tiết (InsertAndUpdate_Form).
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm Nhân Viên . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -40,7 +45,11 @@ public class StaffManagement_Form extends javax.swing.JPanel {
         //Thêm data cho Menu
         initTable();
         getNumberofS();
-        //Them event cho Button ThemNL
+        
+        /*
+         * Xử lý sự kiện click nút Thêm.
+         * Mở form InsertAndUpdate với tham số truyền vào là NULL (đại diện cho trạng thái tạo mới).
+         */
         cmdAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,6 +57,11 @@ public class StaffManagement_Form extends javax.swing.JPanel {
             }
         });
 
+        /**
+         * Xử lý sự kiện click nút Sửa.
+         * Lấy ID của dòng đang được chọn trên JTable, tìm kiếm đối tượng Model tương ứng trong list.
+         * Truyền đối tượng đó sang form InsertAndUpdate để hiển thị dữ liệu cũ lên form.
+         */
         cmdUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +76,10 @@ public class StaffManagement_Form extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Lấy thông tin chi tiết của người Quản lý (User đang đăng nhập).
+     * Dùng để gán ID Quản Lý (NQL) cho những nhân viên mới được thêm vào.
+     */
     public void getInfoNQL() {
         try {
             admin = serviceS.getStaff(user.getUserID());
@@ -70,6 +88,9 @@ public class StaffManagement_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Lấy tổng số lượng nhân sự hiện có trong List và hiển thị lên giao diện.
+     */
     public void getNumberofS() {
         txtTong.setText(list.size() + " HR");
     }

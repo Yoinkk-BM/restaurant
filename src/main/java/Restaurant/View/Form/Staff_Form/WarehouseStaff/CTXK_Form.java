@@ -30,6 +30,10 @@ public class CTXK_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo giao diện xem Chi tiết Phiếu Xuất Kho.
+     * Hiển thị Ngày và Mã phiếu dựa trên đối tượng ModelPXK được truyền vào.
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm NL . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -44,6 +48,10 @@ public class CTXK_Form extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Dùng Mã Phiếu Xuất truy vấn CSDL để lấy danh sách các nguyên liệu và số lượng đã xuất 
+     * tương ứng với phiếu này, sau đó hiển thị lên bảng.
+     */
     public void initTable() {
         try {
             list = service.getCTXK(pxk.getIdXK());
@@ -56,6 +64,9 @@ public class CTXK_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Lọc và tìm kiếm theo tên nguyên liệu trực tiếp trên bảng chi tiết phiếu xuất.
+     */
     public void searchTable(String txt) {
         tableCTXK.removeAllRow();
         for (ModelCTXK data : list) {

@@ -40,6 +40,11 @@ public class ImportStatistic_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo các thành phần cơ bản của Form.
+     * Cài đặt thanh cuộn, định dạng tiền tệ, và gọi các hàm load dữ liệu ban đầu
+     * (load bảng, lấy tổng chi phí/doanh thu, set ngày hiện tại).
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm Phiếu NK . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -50,8 +55,13 @@ public class ImportStatistic_Form extends javax.swing.JPanel {
         initTable();
         getCost();
         setCurrentDate();
-    }
-    //Lấy chi phí nhập kho trong ngày
+    }  
+
+    /**
+     * Lấy tổng chi phí nhập kho / tổng doanh thu trong ngày hiện tại.
+     * Gọi xuống tầng Service (ServiceAdmin) để thực thi câu lệnh SQL SUM().
+     * Sau đó format thành chuỗi tiền tệ và hiển thị lên textfield.
+     */
     public void getCost() {
         try {
             txtprofit.setText(df.format(serviceA.getCostNK("Hôm nay")) + "đ");
@@ -60,11 +70,20 @@ public class ImportStatistic_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Lấy ngày giờ hệ thống hiện tại, format theo định dạng dd-MM-YYYY 
+     * và hiển thị lên Label góc trên cùng của Form.
+     */
     public void setCurrentDate() {
         simpleDateFormat = new SimpleDateFormat("dd-MM-YYYY");
         lbDate.setText("Ngày hiện tại: " + simpleDateFormat.format(new Date()));
     }
 
+    /**
+     * Tải toàn bộ danh sách Phiếu Nhập Kho từ Database lên JTable.
+     * Mặc định lấy theo điều kiện "Tất cả". 
+     * Dữ liệu được lấy từ Service trả về dưới dạng ArrayList, sau đó duyệt vòng lặp để add vào model của JTable.
+     */
     public void initTable() {
         try {
             list = serviceA.getListPNKIn("Tất cả");
@@ -76,6 +95,11 @@ public class ImportStatistic_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Lọc và tìm kiếm dữ liệu trực tiếp trên JTable dựa vào chuỗi văn bản nhập vào (ID hoặc Tên).
+     * Hàm này chỉ thao tác trên ArrayList có sẵn trong RAM (list) để tăng tốc độ, không truy vấn lại Database.
+     * * @param txt Chuỗi từ khóa cần tìm kiếm
+     */
     public void searchTable(String txt) {
         tablePNK.removeAllRow();
         for (ModelPNK data : list) {
@@ -87,6 +111,12 @@ public class ImportStatistic_Form extends javax.swing.JPanel {
         tablePNK.revalidate();
     }
 
+    /**
+     * Lọc dữ liệu theo mốc thời gian (Tất cả, Hôm nay, Tháng này, Năm này).
+     * Hàm này xóa list cũ, gọi xuống Service để truy vấn lại CSDL với điều kiện WHERE tương ứng, 
+     * sau đó vẽ lại JTable.
+     * * @param txt Điều kiện lọc (ví dụ: "Hôm nay")
+     */
     public void FilterTable(String txt) {
         tablePNK.removeAllRow();
         list.clear();
@@ -297,6 +327,12 @@ public class ImportStatistic_Form extends javax.swing.JPanel {
         FilterTable(filter.getSelectedItem().toString());
     }//GEN-LAST:event_filterActionPerformed
 
+    /**
+     * Sự kiện khi bấm nút Xuất Excel.
+     * Sử dụng thư viện Apache POI để tạo một Workbook mới.
+     * Đọc dữ liệu từ DefaultTableModel của JTable hiện tại và ghi từng dòng (Row) vào Sheet.
+     * Cuối cùng xuất ra file .xlsx lưu tại thư mục ExportFile_Excel.
+     */
     private void cmdExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdExcelActionPerformed
         //Xuất danh sách Phiếu Nhập Kho ra file Excel
         try (Workbook workbook = new XSSFWorkbook()) {

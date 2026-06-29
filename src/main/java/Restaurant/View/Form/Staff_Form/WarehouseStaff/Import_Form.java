@@ -39,6 +39,10 @@ public class Import_Form extends javax.swing.JPanel {
         init();
     }
 
+    /**
+     * Khởi tạo giao diện danh sách Phiếu Nhập Kho.
+     * Load bảng, tính tổng tiền, lấy ngày hiện tại và gán sự kiện cho các nút Thêm Phiếu / Xem Chi Tiết.
+     */
     public void init() {
         txtSearch.setHint("Tìm kiếm Phiếu NK . . .");
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
@@ -71,11 +75,17 @@ public class Import_Form extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Cập nhật nhãn hiển thị ngày hiện tại.
+     */
     public void setCurrentDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-YYYY");
         lbDate.setText("Ngày hiện tại: "+simpleDateFormat.format(new Date()));
     }
 
+    /**
+     * Gọi Service tính tổng số tiền của tất cả các phiếu nhập kho đã thực hiện và hiển thị ra màn hình.
+     */
     public void setTongtienNK() {
         try {
             txtTong.setText(df.format(service.getTongtienNK()) +"đ" );
@@ -84,6 +94,9 @@ public class Import_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Tải danh sách toàn bộ các Phiếu Nhập Kho từ Database (Mã NK, Mã NV, Ngày, Tổng tiền) và vẽ lên bảng.
+     */
     public void initTable() {
         try {
             //Lấy danh sách phiếu Nhập Kho
@@ -96,6 +109,9 @@ public class Import_Form extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Tìm kiếm nhanh phiếu nhập kho cục bộ trên bảng dựa vào Mã Nhập Kho.
+     */
     public void searchTable(String txt) {
         tablePNK.removeAllRow();
         for (ModelPNK data : list) {
