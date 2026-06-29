@@ -19,6 +19,7 @@ import Restaurant.Model.ModelKhachHang;
 import Restaurant.Model.ModelMonAn;
 import Restaurant.Model.ModelVoucher;
 
+// Service xử lý các chức năng dành cho khách hàng như xem thực đơn, đặt bàn và dùng voucher.
 public class ServiceCustomer {
 
     private final Connection con;
@@ -28,7 +29,8 @@ public class ServiceCustomer {
         con = DatabaseConnection.getInstance().getConnection();
     }
 
-    //Lấy toàn bộ danh sách Món ăn theo loại Món Ăn đang kinh doanh
+    // Lấy toàn bộ món ăn đang kinh doanh theo loại để hiển thị lên giao diện thực đơn.
+    // Mỗi món sẽ được gắn với icon phù hợp nếu hình ảnh tồn tại trong thư mục resource.
     public ArrayList<ModelMonAn> MenuFood(String type) throws SQLException {
         ArrayList<ModelMonAn> list = new ArrayList<>();
         String sql = "SELECT ID_MonAn,TenMon,DonGia FROM MonAn WHERE Loai=? AND TrangThai='Dang kinh doanh'";
@@ -52,7 +54,8 @@ public class ServiceCustomer {
         return list;
     }
 
-    //Lấy danh sách Món ăn theo loại món ăn và thứ tự Tên/Giá tăng dần/Giá giảm dần đang kinh doanh
+    // Lấy danh sách món ăn theo loại và sắp xếp theo tùy chọn của người dùng.
+    // Có thể sắp xếp theo tên A->Z, giá tăng dần hoặc giá giảm dần.
     public ArrayList<ModelMonAn> MenuFoodOrder(String type, String orderBy) throws SQLException {
         ArrayList<ModelMonAn> list = new ArrayList<>();
 
@@ -89,7 +92,7 @@ public class ServiceCustomer {
         return list;
     }
 
-    //Lấy toàn bộ danh sách bàn theo tầng
+    // Lấy toàn bộ bàn theo tầng để người dùng chọn bàn ở khu vực tương ứng.
     public ArrayList<ModelBan> MenuTable(String floor) throws SQLException {
         ArrayList<ModelBan> list = new ArrayList<>();
         String sql = "SELECT ID_Ban,TenBan,Trangthai FROM Ban WHERE Vitri=?";
@@ -107,8 +110,8 @@ public class ServiceCustomer {
         p.close();
         return list;
     }
-    //Lấy danh sách bàn theo trạng thái bàn Tất cả/Còn trống/Đã đặt trước/Đang dùng bữa
-
+    // Lấy danh sách bàn theo tầng và trạng thái để lọc bàn phù hợp với nhu cầu.
+    // Trạng thái có thể là tất cả, còn trống, đã đặt trước hoặc đang dùng bữa.
     public ArrayList<ModelBan> MenuTableState(String floor, String state) throws SQLException {
         ArrayList<ModelBan> list = new ArrayList<>();
         String sql = "SELECT ID_Ban,TenBan,Trangthai FROM Ban WHERE Vitri=?";
@@ -137,8 +140,8 @@ public class ServiceCustomer {
         return list;
     }
 
-    //Lấy thông tin khách hàng từ ID người dùng
-   // Lấy thông tin khách hàng từ ID người dùng
+    // Lấy thông tin khách hàng dựa trên ID người dùng liên kết.
+    // Dữ liệu này thường được dùng để hiển thị tên, doanh số và điểm tích lũy của khách hàng.
     public ModelKhachHang getCustomer(int userID) throws SQLException {
         ModelKhachHang data = null;
         // Đã sửa to_char thành FORMAT cho SQL Server
@@ -159,7 +162,7 @@ public class ServiceCustomer {
         return data;
     }
 
-    // Đổi tên Khách hàng 
+    // Cập nhật lại tên khách hàng sau khi người dùng đổi tên trên giao diện.
     public void reNameCustomer(ModelKhachHang data) throws SQLException {
         String sql = "UPDATE KhachHang SET TenKH=? WHERE ID_KH=?";
         PreparedStatement p = con.prepareStatement(sql);
@@ -169,7 +172,7 @@ public class ServiceCustomer {
         p.close();
     }
 
-    //Lấy toàn bộ danh sách Voucher
+    // Lấy toàn bộ voucher hiện có để hiển thị cho khách hàng khi thanh toán hoặc đặt bàn.
     public ArrayList<ModelVoucher> MenuVoucher() throws SQLException {
         ArrayList<ModelVoucher> list = new ArrayList<>();
         String sql = "SELECT * FROM Voucher";
@@ -190,7 +193,8 @@ public class ServiceCustomer {
         return list;
     }
 
-    //Lấy danh sách Voucher theo mốc xu
+    // Lọc voucher theo mức điểm tích lũy của khách hàng.
+    // Ví dụ: dưới 300 xu, từ 300 đến 500 xu hoặc trên 500 xu.
     public ArrayList<ModelVoucher> MenuVoucherbyPoint(String bypoint) throws SQLException {
         ArrayList<ModelVoucher> list = new ArrayList<>();
         String sql = "SELECT * FROM Voucher";

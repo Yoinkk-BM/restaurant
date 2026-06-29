@@ -16,7 +16,7 @@ import com.restaurant.DatabaseConnection;
 import Restaurant.Model.ModelLogin;
 import Restaurant.Model.ModelNguoiDung;
 
-// Controller Đăng ký/Đăng nhập vào hệ thống
+// Controller quản lý đăng ký, đăng nhập, xác minh tài khoản và đổi mật khẩu.
 public class ServiceUser {
     
     private final Connection con;
@@ -27,9 +27,9 @@ public class ServiceUser {
     }
     
     /*
-        Kiểm tra thông tin đăng nhập
-        Trả về : null <- Nếu Thông tin đăng nhập sai
-                 ModelNguoiDung <- Nếu thông tin đăng nhập đúng
+        Xác thực thông tin đăng nhập của người dùng.
+        Nếu email và mật khẩu khớp và tài khoản đã được xác minh, hàm sẽ trả về đối tượng người dùng.
+        Nếu sai, hàm trả về null để giao diện biết cần hiển thị lỗi đăng nhập.
     */
     public ModelNguoiDung login(ModelLogin login) throws SQLException {
     ModelNguoiDung user = null;
@@ -53,9 +53,9 @@ public class ServiceUser {
     return user;
 }
     /*
-        Phần đăng ký chỉ dành cho khách hàng, sau khi đăng ký thành công:
-        Thêm thông tin Người dùng gồm email, mật khẩu, verifycode với
-          Vai trò mặc định là 'Khach Hang' xuống bảng NguoiDung.
+        Đăng ký tài khoản dành cho khách hàng.
+        Sau khi đăng ký thành công, hệ thống sẽ tạo một bản ghi người dùng mới với role mặc định là khách hàng
+        và sinh ra một mã xác minh để kích hoạt tài khoản.
     */
     public void insertUser(ModelNguoiDung user)throws SQLException{
         //Lấy ID của User tiếp theo 
@@ -83,7 +83,8 @@ public class ServiceUser {
         user.setRole("Khách Hàng");
     }
     
-    //Tạo random Mã xác minh
+    // Tạo mã xác minh ngẫu nhiên để gửi cho người dùng xác thực tài khoản.
+    // Mã này phải đảm bảo không bị trùng với các mã đã tồn tại trong hệ thống.
     public String generateVerifiyCode()throws SQLException{
         DecimalFormat df = new DecimalFormat("000000");
         Random ran = new Random();
@@ -94,7 +95,8 @@ public class ServiceUser {
         return code;
     }
     
-    //Kiểm tra Mã trùng 
+    // Kiểm tra xem mã xác minh vừa tạo đã tồn tại trong cơ sở dữ liệu hay chưa.
+    // Nếu trùng thì tạo lại mã mới cho đến khi hợp lệ.
     private boolean checkDuplicateCode(String code) throws SQLException{
         boolean duplicate=false;
         String sql="SELECT * FROM NguoiDung WHERE VerifyCode=? FETCH FIRST 1 ROWS ONLY";
@@ -110,9 +112,9 @@ public class ServiceUser {
     }
     
     /*
-        Kiểm tra Email đã tồn tại trong hệ thống hay chưa
-        Trả về : True <- Nếu tồn tại
-                 False <- Nếu chưa tồn tại
+        Kiểm tra email đã tồn tại trong hệ thống hay chưa.
+        Nếu email đã được dùng bởi một tài khoản đã xác minh, hàm trả về true.
+        Điều này giúp ngăn việc đăng ký trùng tài khoản.
     */
     public boolean checkDuplicateEmail(String email) throws SQLException{
         boolean duplicate=false;
@@ -128,14 +130,10 @@ public class ServiceUser {
         return duplicate;
     }
     /*
-        Sau khi Hoàn tất xác minh tài khoản:
-        1.Cập nhật VerifyCode= '' và Trangthai của Người dùng thành Verified
-        2. Thêm mới một khách hàng vào bảng KhachHang với các thông tin:
-        - Tên KH : lấy từ phần đăng ký
-        - Ngày tham gia: ngày hiện tại đăng ký
-        - Doanh số, điểm tích lũy mặc định là 0
-        - ID_ND lấy từ Người dùng vừa tạo
-        
+        Hoàn tất xác minh tài khoản sau khi người dùng nhập đúng mã xác minh.
+        Quá trình này gồm hai bước:
+        1. Cập nhật trạng thái tài khoản từ chưa xác minh sang đã xác minh.
+        2. Tạo bản ghi khách hàng mới trong bảng KhachHang để liên kết với tài khoản.
     */
     public void doneVerify(int userID,String name) throws SQLException{
         //Cập nhật NguoiDung
@@ -167,11 +165,9 @@ public class ServiceUser {
         p2.close();
     }
     
-    /* 
-       Kiểm trả Verify Code của người dùng nhập vào với 
-       Verify Code của người dùng đó được lưu trên DB
-       Trả về : True <- Nếu Mã xác minh đúng
-                False <- Nếu nhập sai
+    /*
+        So sánh mã xác minh người dùng nhập vào với mã đã lưu trong cơ sở dữ liệu.
+        Nếu khớp, tài khoản được coi là đã xác minh thành công.
     */
     public boolean verifyCodeWithUser(int userID,String code) throws SQLException{
         boolean verify=false;
@@ -189,7 +185,8 @@ public class ServiceUser {
         p.close();
         return verify;
     }
-    //Thay đổi mật khẩu tài khoản
+    // Thay đổi mật khẩu cho tài khoản người dùng.
+    // Dùng khi người dùng thực hiện chức năng đổi mật khẩu từ giao diện.
     public void changePassword(int userID,String newPass) throws SQLException{
         String sql="UPDATE NguoiDung SET MatKhau = ? WHERE ID_ND = ?";
         PreparedStatement p=con.prepareStatement(sql);

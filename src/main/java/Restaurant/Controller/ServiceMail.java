@@ -10,6 +10,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+// Service dùng để gửi email xác minh tài khoản cho người dùng.
 public class ServiceMail {
     
     /*

@@ -10,9 +10,13 @@ import javax.swing.table.DefaultTableModel;
 
 import com.restaurant.DatabaseConnection; 
 
+// Controller xử lý các thao tác liên quan đến màn hình bán hàng và thu ngân.
+// Lớp này đóng vai trò trung gian giữa giao diện POS và cơ sở dữ liệu,
+// chịu trách nhiệm lấy dữ liệu món ăn, bàn trống, lưu hóa đơn và xử lý thanh toán.
 public class PosController {
 
-   
+    // Lấy danh sách món ăn đang hoạt động để hiển thị lên giao diện POS.
+    // Mỗi phần tử trong danh sách chứa thông tin: ID món, tên món và đơn giá.
     public List<Object[]> layDanhSachMonAn() {
         List<Object[]> list = new ArrayList<>();
         String sql = "SELECT ID_MonAn, TenMon, DonGia FROM MonAn WHERE TrangThai = 'Dang kinh doanh'";
@@ -28,6 +32,8 @@ public class PosController {
         return list;
     }
 
+    // Lấy danh sách các bàn còn trống để người dùng có thể chọn bàn mới.
+    // Kết quả thường được dùng để điền vào combobox hoặc bảng chọn bàn.
     public List<Object[]> layDanhSachBanTrong() {
         List<Object[]> list = new ArrayList<>();
         String sql = "SELECT ID_Ban, TenBan FROM Ban WHERE Trangthai = 'Con trong'";
@@ -43,6 +49,9 @@ public class PosController {
         return list;
     }
 
+    // Lưu một hóa đơn mới sau khi khách hàng thanh toán hoặc đóng đơn.
+    // Tham số idBan là bàn được chọn, còn billModel chứa các món trong hóa đơn.
+    // Phương thức sẽ tạo bản ghi hóa đơn và các chi tiết hóa đơn tương ứng.
     public boolean luuHoaDon(int idBan, DefaultTableModel billModel) {
         try {
             Connection con = DatabaseConnection.getInstance().getConnection();
@@ -87,7 +96,8 @@ public class PosController {
     // PHẦN 2: CODE MỚI DÀNH RIÊNG CHO LUỒNG THU NGÂN (Lấy theo Bàn/Tầng)
     // =========================================================================
 
-    // Hàm lấy danh sách các Hóa đơn chưa thanh toán (Đổ vào Bảng bên trái)
+    // Lấy danh sách các hóa đơn chưa thanh toán để hiển thị ở khu vực trái của màn hình thu ngân.
+    // Mỗi dòng thường bao gồm mã hóa đơn, vị trí bàn, tên bàn và tổng tiền hiện tại.
     public List<Object[]> layDanhSachHoaDonChuaThanhToan() {
         List<Object[]> list = new ArrayList<>();
         String sql = "SELECT h.ID_HoaDon, b.Vitri, b.TenBan, h.Tongtien " +
@@ -110,7 +120,8 @@ public class PosController {
         return list;
     }
 
-    // Hàm lấy chi tiết các món ăn của 1 Hóa đơn cụ thể (Đổ vào Bảng bên phải)
+    // Lấy toàn bộ chi tiết món ăn của một hóa đơn cụ thể để hiển thị ở bảng bên phải.
+    // Thông tin bao gồm tên món, số lượng, đơn giá và thành tiền từng dòng.
     public List<Object[]> layChiTietHoaDon(int idHoaDon) {
         List<Object[]> list = new ArrayList<>();
         String sql = "SELECT m.TenMon, c.SoLuong, m.DonGia, c.Thanhtien " +
@@ -133,7 +144,8 @@ public class PosController {
         } catch (Exception e) { e.printStackTrace(); }
         return list;
     }
-    // Hàm cập nhật trạng thái hóa đơn thành Đã thanh toán
+    // Cập nhật trạng thái của một hóa đơn từ chưa thanh toán sang đã thanh toán.
+    // Nếu cập nhật thành công, hệ thống sẽ đánh dấu hóa đơn đã hoàn tất.
     public boolean thanhToanHoaDon(int idHoaDon) {
         String sql = "UPDATE HoaDon SET Trangthai = N'Da thanh toan' WHERE ID_HoaDon = ?";
         try {

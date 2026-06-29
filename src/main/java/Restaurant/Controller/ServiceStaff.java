@@ -21,6 +21,7 @@ import Restaurant.Model.ModelNhanVien;
 import Restaurant.Model.ModelPNK;
 import Restaurant.Model.ModelPXK;
 
+// Service xử lý các thao tác nghiệp vụ dành cho nhân viên quầy và kho.
 public class ServiceStaff {
 
     private final Connection con;
