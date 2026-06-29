@@ -15,6 +15,7 @@ import Restaurant.Model.ModelKitchenOrder;
  * Service xử lý toàn bộ logic nghiệp vụ cho màn hình bếp.
  * Kết nối DB qua Singleton DatabaseConnection để dùng chung với các Service khác.
  */
+// Service xử lý các thao tác liên quan đến màn hình bếp và trạng thái món ăn.
 public class ServiceKitchen {
 
     private final Connection con = DatabaseConnection.getInstance().getConnection();

@@ -16,6 +16,8 @@ import Restaurant.Model.ModelMonAn;
 import Restaurant.Model.ModelNhanVien;
 import Restaurant.Model.ModelPNK;
 
+// Service xử lý logic nghiệp vụ cho phần quản trị hệ thống.
+// Chịu trách nhiệm truy vấn và cập nhật dữ liệu nhân viên, hóa đơn, nhập kho, v.v.
 public class ServiceAdmin {
 
     private final Connection con;
@@ -25,7 +27,8 @@ public class ServiceAdmin {
         con = DatabaseConnection.getInstance().getConnection();
     }
 
-    //Lấy toàn bộ danh sách nhân viên
+    // Lấy toàn bộ danh sách nhân viên từ bảng NhanVien để hiển thị lên giao diện quản trị.
+    // Mỗi bản ghi sẽ được chuyển thành đối tượng ModelNhanVien để dễ xử lý ở tầng view.
     public ArrayList<ModelNhanVien> getListNV() throws SQLException {
         ArrayList<ModelNhanVien> list = new ArrayList();
         String sql = "SELECT ID_NV,TenNV,to_char(NgayVL,'dd-mm-yyyy')as Ngay,SDT,ChucVu,ID_NQL,TinhTrang FROM NhanVien";
@@ -47,7 +50,8 @@ public class ServiceAdmin {
         return list;
     }
 
-    //Lấy thông tin nhân viên từ ID
+    // Lấy thông tin chi tiết của một nhân viên dựa trên mã nhân viên.
+    // Dùng khi cần mở form chỉnh sửa hoặc xem thông tin cá nhân của nhân viên.
     public ModelNhanVien getNV(int idNV) throws SQLException {
         ModelNhanVien data = null;
         String sql = "SELECT ID_NV,TenNV,to_char(NgayVL,'dd-mm-yyyy')as Ngay,SDT,ChucVu,ID_NQL,TinhTrang FROM NhanVien WHERE ID_NV=?";
@@ -69,7 +73,8 @@ public class ServiceAdmin {
         return data;
     }
 
-    //Lấy Mã nhân viên tiếp theo được thêm
+    // Tạo mã nhân viên tiếp theo để khi thêm mới không bị trùng lặp ID.
+    // Hàm này tìm khoảng trống trong bảng NhanVien để lấy ID hợp lệ.
     public int getNextID_NV() throws SQLException {
         int id = 0;
         String sql = "SELECT MIN(ID_NV) +1 FROM NhanVien WHERE ID_NV + 1 NOT IN (SELECT ID_NV FROM NhanVien)";
@@ -81,7 +86,8 @@ public class ServiceAdmin {
         return id;
     }
 
-    //Thêm mới một nhân viên
+    // Thêm một nhân viên mới vào hệ thống.
+    // Dữ liệu đầu vào được truyền từ form quản trị và ghi xuống bảng NhanVien.
     public void insertNV(ModelNhanVien data) throws SQLException {
         String sql = "INSERT INTO NhanVien(ID_NV,TenNV,NgayVL,SDT,Chucvu,ID_NQL,TinhTrang) VALUES (?,?,to_date(?,'dd-mm-yyyy'),?,?,?,'Dang lam viec')";
         PreparedStatement p = con.prepareStatement(sql);
@@ -95,7 +101,8 @@ public class ServiceAdmin {
         p.close();
     }
 
-    //Sa thải một nhân viên, cập nhận tình trạng thành 'Da nghi viec'
+    // Cho nhân viên nghỉ việc bằng cách cập nhật trạng thái sang 'Da nghi viec'.
+    // Việc này không xóa dữ liệu khỏi hệ thống mà chỉ đổi trạng thái để giữ lịch sử.
     public void FireStaff(int idNV) throws SQLException {
         String sql = "UPDATE NhanVien SET TinhTrang ='Da nghi viec' WHERE ID_NV=?";
         PreparedStatement p = con.prepareStatement(sql);
@@ -104,7 +111,8 @@ public class ServiceAdmin {
         p.close();
     }
 
-    //Cập nhật thông tin của một nhân viên
+    // Cập nhật lại thông tin nhân viên sau khi người dùng chỉnh sửa trên giao diện.
+    // Thông thường dùng cho tên, số điện thoại và chức vụ.
     public void UpdateNV(ModelNhanVien data) throws SQLException {
         String sql = "UPDATE NhanVien SET TenNV=?,SDT=?,Chucvu=? WHERE ID_NV=?";
         PreparedStatement p = con.prepareStatement(sql);
@@ -116,7 +124,8 @@ public class ServiceAdmin {
         p.close();
     }
 
-    //Lấy toàn bộ danh sách hóa đơn trong Tất cả/ngày/tháng/năm
+    // Lấy danh sách hóa đơn theo bộ lọc thời gian: tất cả, hôm nay, tháng này hoặc năm này.
+    // Hàm này phục vụ cho màn hình thống kê và báo cáo doanh thu.
     public ArrayList<ModelHoaDon> getListHDIn(String txt) throws SQLException {
         ArrayList<ModelHoaDon> list = new ArrayList();
         String sql = "SELECT ID_HoaDon,ID_KH,ID_Ban,to_char(NgayHD,'dd-mm-YYYY') as Ngay,Tienmonan,Tiengiam,Tongtien FROM HoaDon";
@@ -150,7 +159,8 @@ public class ServiceAdmin {
         return list;
     }
 
-    //Lấy tổng doanh thu Hóa Đơn trong ngày/tháng/năm
+    // Tính tổng doanh thu hóa đơn theo bộ lọc thời gian đã chọn.
+    // Dữ liệu này thường được dùng để hiện thị trên dashboard quản trị.
     public int getRevenueHD(String filter) throws SQLException {
         int revenue = 0;
         
@@ -189,7 +199,8 @@ public class ServiceAdmin {
     }
     
 
-    //Lấy toàn bộ danh sách Phiếu Nhập Kho trong Tất cả/ngày/tháng/năm
+    // Lấy danh sách phiếu nhập kho theo thời gian để quản lý hàng hóa và chi phí nhập.
+    // Hàm này hỗ trợ cho phần thống kê kho và báo cáo tài chính.
     public ArrayList<ModelPNK> getListPNKIn(String txt) throws SQLException {
         ArrayList<ModelPNK> list = new ArrayList();
         String sql = "SELECT ID_NK,ID_NV,to_char(NgayNK,'dd-mm-yyyy') AS Ngay,Tongtien FROM PhieuNK ORDER BY ID_NK";
@@ -220,7 +231,7 @@ public class ServiceAdmin {
         return list;
     }
 
-    //Lấy tổng chi phí Nhập kho trong ngày/tháng/năm
+    // Tính tổng chi phí nhập kho theo thời gian để theo dõi ngân sách mua hàng.
     public int getCostNK(String filter) throws SQLException {
         int revenue = 0;
         
