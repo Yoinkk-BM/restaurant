@@ -1,13 +1,16 @@
 package Restaurant.View.Component.Admin_Component;
 
-import Restaurant.Model.ModelCard;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
+import Restaurant.Model.ModelCard;
 
+
+// Card thống kê dùng trong giao diện quản trị.
+// Card này hiển thị icon, tiêu đề, giá trị và mô tả của một chỉ số thống kê như doanh thu hoặc số lượng.
 public class Card extends javax.swing.JPanel {
 
     public Color getColor1() {
@@ -36,6 +39,7 @@ public class Card extends javax.swing.JPanel {
         color2=Color.WHITE;
     }
 
+    // Cập nhật nội dung card bằng dữ liệu truyền vào từ model thống kê.
     public void setData(ModelCard data){
         lbIcon.setIcon(data.getIcon());
         lbTitle.setText(data.getTitle());

@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import Restaurant.View.Dialog.MS_Confirm;
 import Restaurant.View.Main_Frame.Main_Customer_Frame;
 
+// Thành phần giao diện đại diện cho một bàn trong màn hình đặt bàn của khách hàng.
+// Card này hiển thị trạng thái bàn và cho phép khách hàng đặt bàn nếu bàn còn trống.
 public class CardBan extends javax.swing.JPanel {
 
     private final ModelBan data;
@@ -28,6 +30,7 @@ public class CardBan extends javax.swing.JPanel {
         setOpaque(false);
     }
     
+    // Khởi tạo card bàn, thiết lập màu sắc và hành động dựa trên trạng thái hiện tại của bàn.
     public void init(){
         MS_Confirm obj = new MS_Confirm(Main_Customer_Frame.getFrames()[0], true);
         setPreferredSize(new Dimension(300, 325));

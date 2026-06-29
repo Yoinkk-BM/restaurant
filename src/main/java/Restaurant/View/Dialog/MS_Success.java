@@ -7,12 +7,12 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-import Restaurant.View.Swing.PanelRound;
-
+// Hộp thoại thông báo thành công, thường dùng cho các thao tác như xuất file hoặc hoàn thành tác vụ.
 public class MS_Success extends javax.swing.JDialog {
 
     private final Animator animator;

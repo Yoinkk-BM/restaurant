@@ -7,7 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
-//Panel Nhập mã xác minh
+// Panel dùng để nhập mã xác minh sau khi người dùng đăng ký tài khoản.
+// Panel này xuất hiện khi hệ thống cần xác thực email hoặc kích hoạt tài khoản.
 public class PanelVerifyCode extends javax.swing.JPanel {
 
     public PanelVerifyCode() {

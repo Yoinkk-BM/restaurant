@@ -15,6 +15,8 @@ import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
+// Panel điều hướng chính dành cho nhân viên phục vụ hoặc lễ tân.
+// Chứa các mục quản lý bàn, thông tin khách hàng và tài khoản cá nhân.
 public class MenuS extends javax.swing.JPanel {
 
     public void addEvent(EventMenuSelected event) {
@@ -39,7 +41,7 @@ public class MenuS extends javax.swing.JPanel {
 
     }
 
-    //Khởi tạo data cho Menu 
+    // Khởi tạo các mục menu cho giao diện nhân viên và thêm vào panel điều hướng.
     public void initMenuItem() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/table.png")), "Quản lý Bàn", "Tầng 1", "Tầng 2", "Tầng 3"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/customer.png")), "Thông tin Khách Hàng"));

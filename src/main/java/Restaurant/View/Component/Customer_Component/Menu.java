@@ -15,6 +15,8 @@ import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
+// Panel điều hướng chính dành cho khách hàng.
+// Chứa danh sách các mục chức năng như thực đơn, đặt bàn, thông tin cá nhân và đăng xuất.
 public class Menu extends javax.swing.JPanel {
 
     public void addEvent(EventMenuSelected event) {
@@ -39,7 +41,7 @@ public class Menu extends javax.swing.JPanel {
 
     }
 
-    //Khởi tạo data cho Menu 
+    // Khởi tạo các mục menu cho giao diện khách hàng, bao gồm các nhóm chức năng chính và submenu liên quan.
     public void initMenuItem() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/astrology.png")), "Menu - Zodiac Concept", "Aries - Bạch Dương", "Taurus - Kim Ngưu", "Gemini - Song Tử", "Cancer - Cự Giải",
                 "Leo - Sư Tử", "Virgo - Xử Nữ", "Libra - Thiên Bình", "Scorpio - Bọ Cạp", "Sagittarius - Nhân Mã", "Capricorn - Ma Kết", "Aquarius - Bảo Bình", "Pisces - Song Ngư"));

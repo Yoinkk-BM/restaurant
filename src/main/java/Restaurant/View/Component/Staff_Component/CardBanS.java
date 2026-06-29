@@ -18,6 +18,8 @@ import Restaurant.View.Dialog.MS_ConfirmReserve;
 import Restaurant.View.Form.MainForm;
 import Restaurant.View.Main_Frame.Main_Staff_Frame;
 
+// Card đại diện cho một bàn trong giao diện nhân viên.
+// Tùy theo trạng thái bàn, card này có thể thực hiện đặt trước, gọi món hoặc hủy đặt trước.
 public class CardBanS extends javax.swing.JPanel {
     
     private final ModelBan table;
@@ -36,6 +38,7 @@ public class CardBanS extends javax.swing.JPanel {
         init();
     }
     
+    // Khởi tạo giao diện card bàn và gắn hành động phù hợp với từng trạng thái của bàn.
     public void init(){
         book = new MS_ConfirmReserve(Main_Staff_Frame.getFrames()[0], true);
         cancel = new MS_CancelReserve(Main_Staff_Frame.getFrames()[0], true);

@@ -24,6 +24,7 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import Restaurant.View.Form.Customer_Form.AccountC_Form;
 
+// Hộp thoại xác nhận đổi tên khách hàng hoặc đổi thông tin cá nhân.
 public class MS_ConfirmRename extends javax.swing.JDialog {
     
     private final Animator animator;

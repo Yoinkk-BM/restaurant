@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 
-//Panel Loading 
+// Panel loading dùng để che màn hình trong lúc hệ thống đang xử lý tác vụ như đăng nhập hoặc cập nhật dữ liệu.
 public class PanelLoading extends javax.swing.JPanel {
 
     

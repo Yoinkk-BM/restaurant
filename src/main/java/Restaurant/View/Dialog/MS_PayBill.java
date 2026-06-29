@@ -1,13 +1,5 @@
 package Restaurant.View.Dialog;
 
-import Restaurant.Controller.ServiceCustomer;
-import Restaurant.Model.ModelCTHD;
-import Restaurant.Model.ModelHoaDon;
-import Restaurant.View.Swing.CustomScrollBar.ScrollBarCustom;
-import Restaurant.View.Swing.MyTextField;
-import Restaurant.View.Swing.PanelRound;
-import Restaurant.View.Swing.Table;
-
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.GradientPaint;
@@ -19,10 +11,18 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+import Restaurant.Controller.ServiceCustomer;
+import Restaurant.Model.ModelCTHD;
+import Restaurant.Model.ModelHoaDon;
+import Restaurant.View.Swing.CustomScrollBar.ScrollBarCustom;
+
+// Hộp thoại thanh toán hóa đơn dùng trong màn hình thu ngân.
+// Cho phép hiển thị tổng tiền và xử lý việc thanh toán cho khách hàng.
 public class MS_PayBill extends javax.swing.JDialog {
 
     private final Animator animator;

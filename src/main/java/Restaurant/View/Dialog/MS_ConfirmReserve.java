@@ -22,6 +22,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+// Hộp thoại xác nhận việc đặt bàn trước cho khách hàng.
 public class MS_ConfirmReserve extends javax.swing.JDialog {
 
     private final Animator animator;

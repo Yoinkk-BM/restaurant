@@ -24,6 +24,8 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+// Hộp thoại xác nhận chung dùng cho các thao tác quan trọng như đặt bàn hoặc xóa nguyên liệu.
+// Dialog này hiển thị thông báo và chờ người dùng chọn xác nhận hoặc hủy.
 public class MS_Confirm extends javax.swing.JDialog {
 
     private final Animator animator;
@@ -62,7 +64,8 @@ public class MS_Confirm extends javax.swing.JDialog {
         animator.setResolution(0);
         animator.setAcceleration(0.5f);
     }
-    //Xác nhận đặt bàn ở Khách Hàng
+    // Hiển thị hộp thoại xác nhận khi khách hàng muốn đặt bàn.
+    // Nếu người dùng xác nhận, dialog sẽ gọi service để tạo hóa đơn đặt bàn.
     public void Cus_ConfirmBook(ModelBan table, ModelKhachHang customer) {
         setLocationRelativeTo(frame);
         lbTitle.setText("XÁC NHẬN ĐẶT BÀN");
@@ -81,7 +84,8 @@ public class MS_Confirm extends javax.swing.JDialog {
         });
         setVisible(true);
     }
-    //Xác nhận xóa nguyên liệu ở nhân viên kho
+    // Hiển thị hộp thoại xác nhận khi nhân viên kho muốn xóa nguyên liệu.
+    // Nếu xác nhận, dialog sẽ gọi service để xóa dữ liệu khỏi hệ thống.
     public boolean Staff_ConfirmDelete(ModelNguyenLieu data ){
         setLocationRelativeTo(frame);
         delete=false;

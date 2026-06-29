@@ -21,6 +21,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+// Hộp thoại xác nhận khi khách hàng đổi voucher bằng điểm tích lũy.
 public class MS_ConfirmExchangeVoucher extends javax.swing.JDialog {
 
     private final Animator animator;
