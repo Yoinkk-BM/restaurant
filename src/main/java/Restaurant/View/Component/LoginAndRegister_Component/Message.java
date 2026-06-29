@@ -5,9 +5,11 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import javax.swing.ImageIcon;
 
-//Panel hiển thị thông báo
+// Panel dùng để hiển thị thông báo ngắn gọn cho người dùng.
+// Có thể là thông báo thành công hoặc lỗi tùy theo loại message.
 public class Message extends javax.swing.JPanel {
 
     public boolean isShow() {

@@ -22,6 +22,8 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 import Restaurant.View.Form.Customer_Form.AccountC_Form;
 
+// Hộp thoại xác nhận khi khách hàng muốn thêm một món vào hóa đơn.
+// Dialog này hiển thị chi tiết món và số lượng trước khi thực hiện thao tác.
 public class MS_ConfirmOrderFood extends javax.swing.JDialog {
     
     private final Animator animator;
@@ -59,6 +61,8 @@ public class MS_ConfirmOrderFood extends javax.swing.JDialog {
         animator.setAcceleration(0.5f);
     }
     
+    // Hiển thị thông tin món ăn và số lượng cần đặt trước khi lưu vào hóa đơn.
+    // Nếu người dùng xác nhận, sẽ gọi service để thêm chi tiết hóa đơn.
     public void ConfirmOrder(ModelMonAn monan, int soluong,int ID_HoaDon) {
         setLocationRelativeTo(frame);
         lbMessage.setText("Bạn có chắc đặt món ("+monan.getTitle()+") với số lượng "+soluong+" không ?");

@@ -7,12 +7,12 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-import Restaurant.View.Swing.PanelRound;
-
+// Hộp thoại thông báo thanh toán thành công cho khách hàng sau khi hoàn tất giao dịch.
 public class MS_PaymentSuccess extends javax.swing.JDialog {
 
     private final Animator animator;

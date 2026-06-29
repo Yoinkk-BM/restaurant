@@ -21,6 +21,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+// Hộp thoại xác nhận hành động quản trị dành cho admin.
 public class MS_Admin_Confirm extends javax.swing.JDialog {
     
     private final Animator animator;

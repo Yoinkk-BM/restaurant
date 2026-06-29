@@ -20,6 +20,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+// Hộp thoại xác nhận hủy đặt bàn trước.
 public class MS_CancelReserve extends javax.swing.JDialog {
 
     private final Animator animator;

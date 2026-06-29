@@ -18,7 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import net.miginfocom.swing.MigLayout;
 
-//Panel Đăng nhập/Đăng kys
+// Panel chứa hai chế độ giao diện chính: đăng nhập và đăng ký.
+// Panel này quản lý form nhập email, mật khẩu, tên người dùng và chuyển đổi giữa hai màn hình.
 public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
 
     //Lấy tài khoản đăng ký
@@ -52,7 +53,7 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         login.setVisible(false);    
     }
 
-    //Khởi tạo màn hình đăng ký
+    // Khởi tạo giao diện màn hình đăng ký, bao gồm các trường nhập tên, email và mật khẩu.
     private void initRegister(ActionListener eventRegister) {
         //Set Layout
         register.setLayout(new MigLayout("wrap", "push[center]push", "push[]25[]10[]10[]25[]push"));
@@ -113,7 +114,7 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         });
     }
 
-    //Khởi tạo màn hình Đăng nhập
+    // Khởi tạo giao diện màn hình đăng nhập, bao gồm email, mật khẩu và nút đăng nhập.
     private void initLogin(ActionListener eventLogin) {
         //Set Layout
         login.setLayout(new MigLayout("wrap", "push[center]push", "push[]25[]10[]10[]25[]push"));
@@ -212,8 +213,7 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
 
         add(register, "card3");
     }// </editor-fold>//GEN-END:initComponents
-    //Hiển thị màn hình Đăng nhập/Đăng ký
-
+    // Hiển thị màn hình đăng nhập hoặc đăng ký tùy theo tham số truyền vào.
     public void showRegister(boolean show) {
         if (show) {
             register.setVisible(true);

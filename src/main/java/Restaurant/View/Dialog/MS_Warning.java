@@ -7,12 +7,12 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
-import Restaurant.View.Swing.PanelRound;
-
+// Hộp thoại cảnh báo dùng để thông báo cho người dùng về các tình huống không hợp lệ hoặc chưa đủ điều kiện.
 public class MS_Warning extends javax.swing.JDialog {
 
     private final Animator animator;

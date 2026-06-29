@@ -15,6 +15,8 @@ import java.text.DecimalFormat;
 import Restaurant.View.Dialog.MS_ConfirmOrderFood;
 import Restaurant.View.Main_Frame.Main_Customer_Frame;
 
+// Thành phần giao diện đại diện cho một món ăn trên màn hình thực đơn khách hàng.
+// Card này hiển thị hình ảnh, tên, giá và cho phép người dùng chọn số lượng trước khi xác nhận đặt món.
 public class CardMonAn extends javax.swing.JPanel {
 
     private  ModelMonAn data;
@@ -29,6 +31,7 @@ public class CardMonAn extends javax.swing.JPanel {
         setOpaque(false);
     }
 
+    // Khởi tạo giao diện card và gắn sự kiện cho nút thêm món vào hóa đơn.
     public void init() {
         obj = new MS_ConfirmOrderFood(Main_Customer_Frame.getFrames()[0], true);
         setPreferredSize(new Dimension(300, 300));
@@ -140,6 +143,7 @@ public class CardMonAn extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    // Giảm số lượng món cần đặt khi người dùng bấm nút trừ.
     private void cmdMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdMinusActionPerformed
         int num = Integer.parseInt(txtNum.getText());
         if (num > 0) {
@@ -149,6 +153,7 @@ public class CardMonAn extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cmdMinusActionPerformed
 
+    // Tăng số lượng món cần đặt khi người dùng bấm nút cộng.
     private void cmdAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAddActionPerformed
         int num = Integer.parseInt(txtNum.getText());
         txtNum.setText((num + 1) + "");

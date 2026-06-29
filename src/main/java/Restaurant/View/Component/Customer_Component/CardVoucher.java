@@ -17,6 +17,8 @@ import Restaurant.View.Dialog.MS_ConfirmExchangeVoucher;
 import Restaurant.View.Dialog.MS_Warning;
 import Restaurant.View.Main_Frame.Main_Customer_Frame;
 
+// Thành phần giao diện đại diện cho một voucher trên màn hình đổi điểm của khách hàng.
+// Card này hiển thị thông tin ưu đãi và cho phép đổi voucher nếu khách hàng đủ điểm.
 public class CardVoucher extends javax.swing.JPanel {
 
     private final ModelVoucher data;
@@ -55,6 +57,7 @@ public class CardVoucher extends javax.swing.JPanel {
         setOpaque(false);
     }
     
+    // Khởi tạo card voucher và cập nhật giao diện theo số lượng và mức giảm của voucher.
     public void init(){
         
         setPreferredSize(new Dimension(300, 325));

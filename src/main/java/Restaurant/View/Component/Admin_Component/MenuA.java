@@ -15,6 +15,8 @@ import java.awt.RenderingHints;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 
+// Panel điều hướng chính dành cho quản trị viên.
+// Chứa các mục quản lý thực đơn, nhân sự, báo cáo doanh thu, thống kê nhập kho và thông tin khách hàng.
 public class MenuA extends javax.swing.JPanel {
 
     public void addEvent(EventMenuSelected event) {
@@ -39,7 +41,7 @@ public class MenuA extends javax.swing.JPanel {
 
     }
 
-    //Khởi tạo data cho Menu 
+    // Khởi tạo các mục menu cho giao diện quản trị và gắn vào panel điều hướng.
     public void initMenuItem() {
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/menu.png")), "Quản lý Thực Đơn"));
         addMenu(new ModelMenu(new ImageIcon(getClass().getResource("/Icons/MenuBar/staff.png")), "Quản lý Nhân Sự"));

@@ -17,7 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import net.miginfocom.swing.MigLayout;
 
-//Panel Cover ở màn hình đăng nhập/đăng ký
+// Panel cover dùng cho màn hình đăng nhập và đăng ký ở phần giao diện chính.
+// Nó chứa logo, lời chào và nút chuyển đổi giữa hai chế độ.
 public class PanelCover extends javax.swing.JPanel {
 
     private ActionListener event;

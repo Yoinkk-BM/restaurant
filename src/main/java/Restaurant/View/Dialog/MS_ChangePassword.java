@@ -23,6 +23,7 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 
+// Hộp thoại đổi mật khẩu cho người dùng trong hệ thống.
 public class MS_ChangePassword extends javax.swing.JDialog {
 
     private final Animator animator;
